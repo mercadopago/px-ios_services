@@ -82,7 +82,9 @@ open class PXCustomer: NSObject, Codable {
         func getDateFromString(_ string: String?) -> Date? {
             if let dateString = string {
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZw"
+                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
                 let date = dateFormatter.date(from: dateString)
                 return date
             } else {
@@ -139,7 +141,7 @@ open class PXCustomer: NSObject, Codable {
         return try encoder.encode(self)
     }
 
-    open class func fromJSONToPXCustomer(data: Data) throws -> PXCustomer {
+    open class func fromJSON(data: Data) throws -> PXCustomer {
         return try JSONDecoder().decode(PXCustomer.self, from: data)
     }
 
