@@ -8,46 +8,46 @@
 
 import Foundation
 open class PXPayment: NSObject, Codable {
-    open var binaryMode: Bool!
+    open var binaryMode: Bool?
     open var callForAuthorizeId: String?
-    open var captured: Bool!
+    open var captured: Bool?
     open var card: PXCard?
-    open var collectorId: String!
-    open var couponAmount: Double!
-    open var currencyId: String!
+    open var collectorId: Int?
+    open var couponAmount: Double?
+    open var currencyId: String?
     open var dateApproved: Date?
     open var dateCreated: Date?
     open var dateLastUpdated: Date?
-    open var _description: String!
-    open var differentialPricingId: Int64!
-    open var externalReference: String!
-    open var feeDetails: [PXFeeDetail]!
-    open var id: String!
-    open var installments: Int!
-    open var issuerId: Int!
-    open var liveMode: Bool!
-    open var metadata: [String: String]!
+    open var _description: String?
+    open var differentialPricingId: Int64?
+    open var externalReference: String?
+    open var feeDetails: [PXFeeDetail]?
+    open var id: Int64!
+    open var installments: Int?
+    open var issuerId: String?
+    open var liveMode: Bool?
+    open var metadata: [String: String]?
     open var moneyReleaseDate: Date?
-    open var notificationUrl: String!
-    open var operationType: String!
-    open var order: PXOrder!
-    open var payer: PXPayer!
-    open var paymentMethodId: String!
-    open var paymentTypeId: String!
-    open var refunds: [PXRefund]!
-    open var statementDescriptor: String!
-    open var status: String!
-    open var statusDetail: String!
-    open var transactionAmount: Double!
-    open var transactionAmountRefunded: Double!
-    open var transactionDetails: PXTransactionDetails!
-    open var tokenId: String!
+    open var notificationUrl: String?
+    open var operationType: String?
+    open var order: PXOrder?
+    open var payer: PXPayer?
+    open var paymentMethodId: String?
+    open var paymentTypeId: String?
+    open var refunds: [PXRefund]?
+    open var statementDescriptor: String?
+    open var status: String?
+    open var statusDetail: String?
+    open var transactionAmount: Double?
+    open var transactionAmountRefunded: Double?
+    open var transactionDetails: PXTransactionDetails?
+    open var tokenId: String?
 
     public override init() {
 
     }
 
-    init(binaryMode: Bool, callForAuthorizeId: String?, captured: Bool, card: PXCard?, collectorId: String, couponAmount: Double, currencyId: String, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String, differentialPricingId: Int64, externalReference: String?, feeDetails: [PXFeeDetail], id: String, installments: Int, issuerId: Int, liveMode: Bool, metadata: [String: String], moneyReleaseDate: Date?, notificationUrl: String, operationType: String!, order: PXOrder, payer: PXPayer, paymentMethodId: String, paymentTypeId: String, refunds: [PXRefund], statementDescriptor: String, status: String, statusDetail: String, transactionAmount: Double, transactionAmountRefunded: Double, transactionDetails: PXTransactionDetails, tokenId: String) {
+    init(binaryMode: Bool?, callForAuthorizeId: String?, captured: Bool?, card: PXCard?, collectorId: Int?, couponAmount: Double?, currencyId: String?, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String?, differentialPricingId: Int64?, externalReference: String?, feeDetails: [PXFeeDetail]?, id: Int64, installments: Int?, issuerId: String?, liveMode: Bool?, metadata: [String: String]?, moneyReleaseDate: Date?, notificationUrl: String?, operationType: String?, order: PXOrder?, payer: PXPayer?, paymentMethodId: String?, paymentTypeId: String?, refunds: [PXRefund]?, statementDescriptor: String?, status: String?, statusDetail: String?, transactionAmount: Double?, transactionAmountRefunded: Double?, transactionDetails: PXTransactionDetails?, tokenId: String?) {
 
         self.binaryMode = binaryMode
         self.callForAuthorizeId = callForAuthorizeId
@@ -125,40 +125,40 @@ open class PXPayment: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPaymentKeys.self)
-        let binaryMode: Bool = try container.decode(Bool.self, forKey: .binaryMode)
+        let binaryMode: Bool? = try container.decodeIfPresent(Bool.self, forKey: .binaryMode)
         let callForAuthorizeId: String? = try container.decodeIfPresent(String.self, forKey: .callForAuthorizeId)
-        let captured: Bool = try container.decode(Bool.self, forKey: .captured)
+        let captured: Bool? = try container.decodeIfPresent(Bool.self, forKey: .captured)
         let card: PXCard? = try container.decodeIfPresent(PXCard.self, forKey: .card)
-        let collectorId: String = try container.decode(String.self, forKey: .collectorId)
-        let couponAmount: Double = try container.decode(Double.self, forKey: .couponAmount)
-        let currencyId: String = try container.decode(String.self, forKey: .currencyId)
-        let dateApprovedString: String = try container.decode(String.self, forKey: .dateApproved)
-        let dateCreatedString: String = try container.decode(String.self, forKey: .dateCreated)
-        let dateLastUpdatedString: String = try container.decode(String.self, forKey: .dateLastUpdated)
-        let description: String = try container.decode(String.self, forKey: .description)
-        let differentialPricingId: Int64 = try container.decode(Int64.self, forKey: .differentialPricingId)
-        let externalReference: String = try container.decode(String.self, forKey: .externalReference)
-        let feeDetails: [PXFeeDetail] = try container.decode([PXFeeDetail].self, forKey: .feeDetails)
-        let id: String = try container.decode(String.self, forKey: .id)
-        let installments: Int = try container.decode(Int.self, forKey: .installments)
-        let issuerId: Int = try container.decode(Int.self, forKey: .issuerId)
-        let liveMode: Bool = try container.decode(Bool.self, forKey: .liveMode)
-        let metadata: [String: String] = try container.decode([String: String].self, forKey: .metadata)
-        let moneyReleaseDateString: String = try container.decode(String.self, forKey: .moneyReleaseDate)
-        let notificationUrl: String = try container.decode(String.self, forKey: .notificationUrl)
-        let operationType: String = try container.decode(String.self, forKey: .operationType)
-        let order: PXOrder = try container.decode(PXOrder.self, forKey: .order)
-        let payer: PXPayer = try container.decode(PXPayer.self, forKey: .payer)
-        let paymentMethodId: String = try container.decode(String.self, forKey: .paymentMethodId)
-        let paymentTypeId: String = try container.decode(String.self, forKey: .paymentTypeId)
-        let refunds: [PXRefund] = try container.decode([PXRefund].self, forKey: .refunds)
-        let statementDescriptor: String = try container.decode(String.self, forKey: .statementDescriptor)
-        let status: String = try container.decode(String.self, forKey: .status)
-        let statusDetail: String = try container.decode(String.self, forKey: .statusDetail)
-        let transactionAmount: Double = try container.decode(Double.self, forKey: .transactionAmount)
-        let transactionAmountRefunded: Double = try container.decode(Double.self, forKey: .transactionAmountRefunded)
-        let transactionDetails: PXTransactionDetails = try container.decode(PXTransactionDetails.self, forKey: .transactionDetails)
-        let tokenId: String = try container.decode(String.self, forKey: .tokenId)
+        let collectorId: Int? = try container.decodeIfPresent(Int.self, forKey: .collectorId)
+        let couponAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .couponAmount)
+        let currencyId: String? = try container.decodeIfPresent(String.self, forKey: .currencyId)
+        let dateApprovedString: String? = try container.decodeIfPresent(String.self, forKey: .dateApproved)
+        let dateCreatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateCreated)
+        let dateLastUpdatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateLastUpdated)
+        let description: String? = try container.decodeIfPresent(String.self, forKey: .description)
+        let differentialPricingId: Int64? = try container.decodeIfPresent(Int64.self, forKey: .differentialPricingId)
+        let externalReference: String? = try container.decodeIfPresent(String.self, forKey: .externalReference)
+        let feeDetails: [PXFeeDetail]? = try container.decodeIfPresent([PXFeeDetail].self, forKey: .feeDetails)
+        let id: Int64 = try container.decode(Int64.self, forKey: .id)
+        let installments: Int? = try container.decodeIfPresent(Int.self, forKey: .installments)
+        let issuerId: String? = try container.decodeIfPresent(String.self, forKey: .issuerId)
+        let liveMode: Bool? = try container.decodeIfPresent(Bool.self, forKey: .liveMode)
+        let metadata: [String: String]? = try container.decodeIfPresent([String: String].self, forKey: .metadata)
+        let moneyReleaseDateString: String? = try container.decodeIfPresent(String.self, forKey: .moneyReleaseDate)
+        let notificationUrl: String? = try container.decodeIfPresent(String.self, forKey: .notificationUrl)
+        let operationType: String? = try container.decodeIfPresent(String.self, forKey: .operationType)
+        let order: PXOrder? = try container.decodeIfPresent(PXOrder.self, forKey: .order)
+        let payer: PXPayer? = try container.decodeIfPresent(PXPayer.self, forKey: .payer)
+        let paymentMethodId: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodId)
+        let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
+        let refunds: [PXRefund]? = try container.decodeIfPresent([PXRefund].self, forKey: .refunds)
+        let statementDescriptor: String? = try container.decodeIfPresent(String.self, forKey: .statementDescriptor)
+        let status: String? = try container.decodeIfPresent(String.self, forKey: .status)
+        let statusDetail: String? = try container.decodeIfPresent(String.self, forKey: .statusDetail)
+        let transactionAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .transactionAmount)
+        let transactionAmountRefunded: Double? = try container.decodeIfPresent(Double.self, forKey: .transactionAmountRefunded)
+        let transactionDetails: PXTransactionDetails? = try container.decodeIfPresent(PXTransactionDetails.self, forKey: .transactionDetails)
+        let tokenId: String? = try container.decodeIfPresent(String.self, forKey: .tokenId)
 
         let dateApproved = String.getDate(dateApprovedString)
         let dateCreated = String.getDate(dateCreatedString)

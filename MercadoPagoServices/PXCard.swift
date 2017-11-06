@@ -12,16 +12,16 @@ open class PXCard: NSObject, Codable {
     open var customerId: String?
     open var dateCreated: Date?
     open var dateLastUpdated: Date?
-    open var expirationMonth: Int!
-    open var expirationYear: Int!
-    open var firstSixDigits: String!
-    open var id: String!
-    open var issuer: PXIssuer!
-    open var lastFourDigits: String!
-    open var paymentMethod: PXPaymentMethod!
-    open var securityCode: PXSecurityCode!
+    open var expirationMonth: Int?
+    open var expirationYear: Int?
+    open var firstSixDigits: String?
+    open var id: String?
+    open var issuer: PXIssuer?
+    open var lastFourDigits: String?
+    open var paymentMethod: PXPaymentMethod?
+    open var securityCode: PXSecurityCode?
 
-    init(cardHolder: PXCardHolder?, customerId: String?, dateCreated: Date?, dateLastUpdated: Date?, expirationMonth: Int, expirationYear: Int, firstSixDigits: String, id: String, issuer: PXIssuer, lastFourDigits: String, paymentMethod: PXPaymentMethod, securityCode: PXSecurityCode) {
+    init(cardHolder: PXCardHolder?, customerId: String?, dateCreated: Date?, dateLastUpdated: Date?, expirationMonth: Int?, expirationYear: Int?, firstSixDigits: String?, id: String?, issuer: PXIssuer?, lastFourDigits: String?, paymentMethod: PXPaymentMethod?, securityCode: PXSecurityCode?) {
 
         self.cardHolder = cardHolder
         self.customerId = customerId
@@ -58,14 +58,14 @@ open class PXCard: NSObject, Codable {
         let customerId: String? = try container.decodeIfPresent(String.self, forKey: .customerId)
         let dateCreatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateCreated)
         let dateLastUpdatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateLastUpdated)
-        let expirationMonth: Int = try container.decode(Int.self, forKey: .expirationMonth)
-        let expirationYear: Int = try container.decode(Int.self, forKey: .expirationYear)
-        let firstSixDigits: String = try container.decode(String.self, forKey: .firstSixDigits)
-        let id: String = try container.decode(String.self, forKey: .id)
-        let issuer: PXIssuer = try container.decode(PXIssuer.self, forKey: .issuer)
-        let lastFourDigits: String = try container.decode(String.self, forKey: .lastFourDigits)
-        let paymentMethod: PXPaymentMethod = try container.decode(PXPaymentMethod.self, forKey: .paymentMethod)
-        let securityCode: PXSecurityCode = try container.decode(PXSecurityCode.self, forKey: .securityCode)
+        let expirationMonth: Int? = try container.decodeIfPresent(Int.self, forKey: .expirationMonth)
+        let expirationYear: Int? = try container.decodeIfPresent(Int.self, forKey: .expirationYear)
+        let firstSixDigits: String? = try container.decodeIfPresent(String.self, forKey: .firstSixDigits)
+        let id: String? = try container.decodeIfPresent(String.self, forKey: .id)
+        let issuer: PXIssuer? = try container.decodeIfPresent(PXIssuer.self, forKey: .issuer)
+        let lastFourDigits: String? = try container.decodeIfPresent(String.self, forKey: .lastFourDigits)
+        let paymentMethod: PXPaymentMethod? = try container.decodeIfPresent(PXPaymentMethod.self, forKey: .paymentMethod)
+        let securityCode: PXSecurityCode? = try container.decodeIfPresent(PXSecurityCode.self, forKey: .securityCode)
 
         let dateCreated = String.getDate(dateCreatedString)
         let dateLastUpdated = String.getDate(dateLastUpdatedString)

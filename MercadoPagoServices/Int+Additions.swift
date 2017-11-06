@@ -9,7 +9,13 @@
 import Foundation
 
 extension Int {
-    var stringValue:String {
+    public var stringValue:String {
+        return "\(self)"
+    }
+}
+
+extension Int64 {
+    public var stringValue:String {
         return "\(self)"
     }
 }

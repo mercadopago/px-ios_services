@@ -8,15 +8,15 @@
 
 import Foundation
 open class PXTransactionDetails: NSObject, Codable {
-    open var externalResourceUrl: String!
-    open var financialInstitution: String!
-    open var installmentAmount: Double!
-    open var netReceivedAmount: Double!
-    open var overpaidAmount: Double!
-    open var totalPaidAmount: Double!
-    open var paymentMethodReferenceId: String!
+    open var externalResourceUrl: String?
+    open var financialInstitution: String?
+    open var installmentAmount: Double?
+    open var netReceivedAmount: Double?
+    open var overpaidAmount: Double?
+    open var totalPaidAmount: Double?
+    open var paymentMethodReferenceId: String?
 
-    init(externalResourceUrl: String, financialInstitution: String, installmentAmount: Double, netReivedAmount: Double, overpaidAmount: Double, totalPaidAmount: Double, paymentMethodReferenceId: String) {
+    init(externalResourceUrl: String?, financialInstitution: String?, installmentAmount: Double?, netReivedAmount: Double?, overpaidAmount: Double?, totalPaidAmount: Double?, paymentMethodReferenceId: String?) {
         self.externalResourceUrl = externalResourceUrl
         self.financialInstitution = financialInstitution
         self.installmentAmount = installmentAmount
@@ -38,13 +38,13 @@ open class PXTransactionDetails: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXTransactionDetailsKeys.self)
-        let externalResourceUrl: String = try container.decode(String.self, forKey: .externalResourceUrl)
-        let financialInstitution: String = try container.decode(String.self, forKey: .financialInstitution)
-        let installmentAmount: Double = try container.decode(Double.self, forKey: .installmentAmount)
-        let netReivedAmount: Double = try container.decode(Double.self, forKey: .netReivedAmount)
-        let overpaidAmount: Double = try container.decode(Double.self, forKey: .overPaidAmount)
-        let totalPaidAmount: Double = try container.decode(Double.self, forKey: .totalPaidAmount)
-        let paymentMethodReferenceId: String = try container.decode(String.self, forKey: .paymentMethodReferenceId)
+        let externalResourceUrl: String? = try container.decodeIfPresent(String.self, forKey: .externalResourceUrl)
+        let financialInstitution: String? = try container.decodeIfPresent(String.self, forKey: .financialInstitution)
+        let installmentAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .installmentAmount)
+        let netReivedAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .netReivedAmount)
+        let overpaidAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .overPaidAmount)
+        let totalPaidAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .totalPaidAmount)
+        let paymentMethodReferenceId: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodReferenceId)
 
         self.init(externalResourceUrl: externalResourceUrl, financialInstitution: financialInstitution, installmentAmount: installmentAmount, netReivedAmount: netReivedAmount, overpaidAmount: overpaidAmount, totalPaidAmount: totalPaidAmount, paymentMethodReferenceId: paymentMethodReferenceId)
     }

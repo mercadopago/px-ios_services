@@ -9,15 +9,15 @@
 import Foundation
 open class PXCheckoutPreference: NSObject, Codable {
     open var id: String!
-    open var items: [PXItem]!
-    open var payer: PXPayer!
-    open var paymentPreference: PXPaymentPreference!
-    open var siteId: String!
+    open var items: [PXItem]?
+    open var payer: PXPayer?
+    open var paymentPreference: PXPaymentPreference?
+    open var siteId: String?
     open var expirationDateTo: Date?
     open var expirationDateFrom: Date?
     open var site: PXSite?
 
-    init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?) {
+    init(id: String, items: [PXItem]?, payer: PXPayer?, paymentPreference: PXPaymentPreference?, siteId: String?, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?) {
         self.id = id
         self.items = items
         self.payer = payer
@@ -42,12 +42,12 @@ open class PXCheckoutPreference: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCheckoutPreferenceKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
-        let items: [PXItem] = try container.decode([PXItem].self, forKey: .items)
-        let paymentPreference: PXPaymentPreference = try container.decode(PXPaymentPreference.self, forKey: .paymentPreference)
-        let payer: PXPayer = try container.decode(PXPayer.self, forKey: .payer)
-        let expirationDateToString: String = try container.decode(String.self, forKey: .expirationDateTo)
-        let expirationDateFromString: String = try container.decode(String.self, forKey: .expirationDateFrom)
-        let siteId: String = try container.decode(String.self, forKey: .siteId)
+        let items: [PXItem]? = try container.decodeIfPresent([PXItem].self, forKey: .items)
+        let paymentPreference: PXPaymentPreference? = try container.decodeIfPresent(PXPaymentPreference.self, forKey: .paymentPreference)
+        let payer: PXPayer? = try container.decodeIfPresent(PXPayer.self, forKey: .payer)
+        let expirationDateToString: String? = try container.decodeIfPresent(String.self, forKey: .expirationDateTo)
+        let expirationDateFromString: String? = try container.decodeIfPresent(String.self, forKey: .expirationDateFrom)
+        let siteId: String? = try container.decodeIfPresent(String.self, forKey: .siteId)
         let site: PXSite? = try container.decodeIfPresent(PXSite.self, forKey: .site)
 
         let expirationDateTo = String.getDate(expirationDateToString)

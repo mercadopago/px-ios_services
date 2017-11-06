@@ -35,7 +35,7 @@ open class InstructionsService: MercadoPagoService {
 
         self.request(uri: MercadoPagoService.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (data: Data) -> Void in
 
-            let jsonResult = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
+            let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
 
             let error = jsonResult["error"] as? String
             if error != nil && error!.characters.count > 0 {
@@ -44,6 +44,6 @@ open class InstructionsService: MercadoPagoService {
             } else {
                 success(try! PXInstructions.fromJSON(data: data))
             }
-            } as! (Data?) -> Void, failure: failure)
+            }, failure: failure)
     }
 }

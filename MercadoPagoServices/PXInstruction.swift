@@ -8,22 +8,22 @@
 
 import Foundation
 open class PXInstruction: NSObject, Codable {
-    open var title: String!
-    open var subtitle: String!
-    open var accreditationMessage: String!
-    open var accreditationComments: [String]!
-    open var action: [PXInstructionAction]!
-    open var type: String!
-    open var references: [PXInstructionReference]!
-    open var secondaryInfo: [String]!
-    open var tertiaryInfo: [String]!
-    open var info: [String]!
+    open var title: String?
+    open var subtitle: String?
+    open var accreditationMessage: String?
+    open var accreditationComments: [String]?
+    open var action: [PXInstructionAction]?
+    open var type: String?
+    open var references: [PXInstructionReference]?
+    open var secondaryInfo: [String]?
+    open var tertiaryInfo: [String]?
+    open var info: [String]?
 
-    init(title: String, subtitle: String, accreditationMessage: String, acceditationComments: [String], action: [PXInstructionAction], type: String, references: [PXInstructionReference], secondaryInfo: [String], tertiaryInfo: [String], info: [String]) {
+    init(title: String?, subtitle: String?, accreditationMessage: String?, accreditationComments: [String]?, action: [PXInstructionAction]?, type: String?, references: [PXInstructionReference]?, secondaryInfo: [String]?, tertiaryInfo: [String]?, info: [String]?) {
         self.title = title
         self.subtitle = subtitle
         self.accreditationMessage = accreditationMessage
-        self.accreditationComments = acceditationComments
+        self.accreditationComments = accreditationComments
         self.action = action
         self.type = type
         self.references = references
@@ -36,7 +36,7 @@ open class PXInstruction: NSObject, Codable {
         case title
         case subtitle
         case accreditationMessage = "accreditation_message"
-        case acceditationComments = "acceditation_comments"
+        case accreditationComments = "accreditation_comments"
         case action
         case type
         case references
@@ -47,18 +47,18 @@ open class PXInstruction: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstructionKeys.self)
-        let title: String = try container.decode(String.self, forKey: .title)
-        let subtitle: String = try container.decode(String.self, forKey: .subtitle)
-        let accreditationMessage: String = try container.decode(String.self, forKey: .accreditationMessage)
-        let acceditationComments: [String] = try container.decode([String].self, forKey: .acceditationComments)
-        let action: [PXInstructionAction] = try container.decode([PXInstructionAction].self, forKey: .action)
-        let type: String = try container.decode(String.self, forKey: .type)
-        let references: [PXInstructionReference] = try container.decode([PXInstructionReference].self, forKey: .references)
-        let secondaryInfo: [String] = try container.decode([String].self, forKey: .secondaryInfo)
-        let tertiaryInfo: [String] = try container.decode([String].self, forKey: .tertiaryInfo)
-        let info: [String] = try container.decode([String].self, forKey: .info)
+        let title: String? = try container.decodeIfPresent(String.self, forKey: .title)
+        let subtitle: String? = try container.decodeIfPresent(String.self, forKey: .subtitle)
+        let accreditationMessage: String? = try container.decodeIfPresent(String.self, forKey: .accreditationMessage)
+        let accreditationComments: [String]? = try container.decodeIfPresent([String].self, forKey: .accreditationComments)
+        let action: [PXInstructionAction]? = try container.decodeIfPresent([PXInstructionAction].self, forKey: .action)
+        let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
+        let references: [PXInstructionReference]? = try container.decodeIfPresent([PXInstructionReference].self, forKey: .references)
+        let secondaryInfo: [String]? = try container.decodeIfPresent([String].self, forKey: .secondaryInfo)
+        let tertiaryInfo: [String]? = try container.decodeIfPresent([String].self, forKey: .tertiaryInfo)
+        let info: [String]? = try container.decodeIfPresent([String].self, forKey: .info)
 
-        self.init(title: title, subtitle: subtitle, accreditationMessage: accreditationMessage, acceditationComments: acceditationComments, action: action, type: type, references: references, secondaryInfo: secondaryInfo, tertiaryInfo: tertiaryInfo, info: info)
+        self.init(title: title, subtitle: subtitle, accreditationMessage: accreditationMessage, accreditationComments: accreditationComments, action: action, type: type, references: references, secondaryInfo: secondaryInfo, tertiaryInfo: tertiaryInfo, info: info)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -66,7 +66,7 @@ open class PXInstruction: NSObject, Codable {
         try container.encodeIfPresent(self.title, forKey: .title)
         try container.encodeIfPresent(self.subtitle, forKey: .subtitle)
         try container.encodeIfPresent(self.accreditationMessage, forKey: .accreditationMessage)
-        try container.encodeIfPresent(self.accreditationComments, forKey: .acceditationComments)
+        try container.encodeIfPresent(self.accreditationComments, forKey: .accreditationComments)
         try container.encodeIfPresent(self.action, forKey: .action)
         try container.encodeIfPresent(self.type, forKey: .type)
         try container.encodeIfPresent(self.references, forKey: .references)
