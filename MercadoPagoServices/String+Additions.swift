@@ -62,6 +62,15 @@ extension String {
             }
         }
     }
+    
+    static public func getDate(_ string: String?) -> Date? {
+        guard let dateString = string else {
+            return nil
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        return dateFormatter.date(from: dateString)
+    }
 }
 
 open class Regex {

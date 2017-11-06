@@ -160,21 +160,10 @@ open class PXPayment: NSObject, Codable {
         let transactionDetails: PXTransactionDetails = try container.decode(PXTransactionDetails.self, forKey: .transactionDetails)
         let tokenId: String = try container.decode(String.self, forKey: .tokenId)
 
-        func getDateFromString(_ string: String?) -> Date? {
-            if let dateString = string {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                let date = dateFormatter.date(from: dateString)
-                return date
-            } else {
-                return nil
-            }
-        }
-
-        let dateApproved = getDateFromString(dateApprovedString)
-        let dateCreated = getDateFromString(dateCreatedString)
-        let dateLastUpdated = getDateFromString(dateLastUpdatedString)
-        let moneyReleaseDate = getDateFromString(moneyReleaseDateString)
+        let dateApproved = String.getDate(dateApprovedString)
+        let dateCreated = String.getDate(dateCreatedString)
+        let dateLastUpdated = String.getDate(dateLastUpdatedString)
+        let moneyReleaseDate = String.getDate(moneyReleaseDateString)
 
         self.init(binaryMode: binaryMode, callForAuthorizeId: callForAuthorizeId, captured: captured, card: card, collectorId: collectorId, couponAmount: couponAmount, currencyId: currencyId, dateApproved: dateApproved, dateCreated: dateCreated, dateLastUpdated: dateLastUpdated, description: description, differentialPricingId: differentialPricingId, externalReference: externalReference, feeDetails: feeDetails, id: id, installments: installments, issuerId: issuerId, liveMode: liveMode, metadata: metadata, moneyReleaseDate: moneyReleaseDate, notificationUrl: notificationUrl, operationType: operationType, order: order, payer: payer, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, refunds: refunds, statementDescriptor: statementDescriptor, status: status, statusDetail: statusDetail, transactionAmount: transactionAmount, transactionAmountRefunded: transactionAmountRefunded, transactionDetails: transactionDetails, tokenId: tokenId)
     }

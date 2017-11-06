@@ -36,12 +36,15 @@ open class PXRefund: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXRefundKeys.self)
         let metadata: [String: String] = try container.decode([String: String].self, forKey: .metadata)
+        let dateCreatedString: String = try container.decode(String.self, forKey: .dateCreated)
         let id: String = try container.decode(String.self, forKey: .id)
         let paymentId: Int64 = try container.decode(Int64.self, forKey: .paymentId)
         let source: String = try container.decode(String.self, forKey: .source)
         let uniqueSecuenceNumber: String = try container.decode(String.self, forKey: .uniqueSecuenceNumber)
+        
+        let dateCreated = String.getDate(dateCreatedString)
 
-        self.init(id: id, dateCreated: nil, metadata: metadata, paymentId: paymentId, source: source, uniqueSecuenceNumber: uniqueSecuenceNumber)
+        self.init(id: id, dateCreated: dateCreated, metadata: metadata, paymentId: paymentId, source: source, uniqueSecuenceNumber: uniqueSecuenceNumber)
     }
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXRefundKeys.self)

@@ -45,12 +45,15 @@ open class PXCheckoutPreference: NSObject, Codable {
         let items: [PXItem] = try container.decode([PXItem].self, forKey: .items)
         let paymentPreference: PXPaymentPreference = try container.decode(PXPaymentPreference.self, forKey: .paymentPreference)
         let payer: PXPayer = try container.decode(PXPayer.self, forKey: .payer)
+        let expirationDateToString: String = try container.decode(String.self, forKey: .expirationDateTo)
+        let expirationDateFromString: String = try container.decode(String.self, forKey: .expirationDateFrom)
         let siteId: String = try container.decode(String.self, forKey: .siteId)
         let site: PXSite? = try container.decodeIfPresent(PXSite.self, forKey: .site)
 
-        // TODO: Agregar dates
+        let expirationDateTo = String.getDate(expirationDateToString)
+        let expirationDateFrom = String.getDate(expirationDateFromString)
 
-        self.init(id: id, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: nil, expirationDateFrom: nil, site: site)
+        self.init(id: id, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site)
     }
 
      public func encode(to encoder: Encoder) throws {

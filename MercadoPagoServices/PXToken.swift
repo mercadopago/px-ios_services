@@ -74,20 +74,25 @@ open class PXToken: NSObject, Codable {
         let cardId: String? = try container.decodeIfPresent(String.self, forKey: .cardId)
         let luhnValidation: Bool = try container.decode(Bool.self, forKey: .luhnValidation)
         let status: String = try container.decode(String.self, forKey: .status)
-        //let usedDate: String = try container.decode(String.self, forKey: .usedDate)
+        let usedDateString: String = try container.decode(String.self, forKey: .usedDate)
         let cardNumberLength: Int = try container.decode(Int.self, forKey: .cardNumberLength)
-        //let dateCreated: String = try container.decode(dateCreated.self, forKey: .dateCreated)
+        let dateCreatedString: String = try container.decode(String.self, forKey: .dateCreated)
         let securityCodeLength: Int = try container.decode(Int.self, forKey: .securityCodeLength)
         let expirationMonth: Int = try container.decode(Int.self, forKey: .expirationMonth)
         let expirationYear: Int = try container.decode(Int.self, forKey: .expirationYear)
-        //let dateLastUpdated: String = try container.decode(String.self, forKey: .dateLastUpdated)
-        //let dueDate: String = try container.decode(String.self, forKey: .dueDate)
+        let dateLastUpdatedString: String = try container.decode(String.self, forKey: .dateLastUpdated)
+        let dueDateString: String = try container.decode(String.self, forKey: .dueDate)
         let firstSixDigits: String = try container.decode(String.self, forKey: .firstSixDigits)
         let lastFourDigits: String = try container.decode(String.self, forKey: .lastFourDigits)
         let cardholder: PXCardHolder = try container.decode(PXCardHolder.self, forKey: .cardholder)
         let esc: String? = try container.decodeIfPresent(String.self, forKey: .esc)
+        
+        let usedDate = String.getDate(usedDateString)
+        let dateCreated = String.getDate(dateCreatedString)
+        let dateLastUpdated = String.getDate(dateLastUpdatedString)
+        let dueDate = String.getDate(dueDateString)
 
-        self.init(id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: nil, cardNumberLength: cardNumberLength, dateCreated: nil, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, dateLastUpdated: nil, dueDate: nil, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, cardholder: cardholder, esc: esc)
+        self.init(id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: usedDate, cardNumberLength: cardNumberLength, dateCreated: dateCreated, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, dateLastUpdated: dateLastUpdated, dueDate: dueDate, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, cardholder: cardholder, esc: esc)
     }
 
     public func encode(to encoder: Encoder) throws {

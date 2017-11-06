@@ -11,7 +11,7 @@ open class PXCard: NSObject, Codable {
     open var cardHolder: PXCardHolder?
     open var customerId: String?
     open var dateCreated: Date?
-    open var lastUpdated: Date?
+    open var dateLastUpdated: Date?
     open var expirationMonth: Int!
     open var expirationYear: Int!
     open var firstSixDigits: String!
@@ -21,12 +21,12 @@ open class PXCard: NSObject, Codable {
     open var paymentMethod: PXPaymentMethod!
     open var securityCode: PXSecurityCode!
 
-    init(cardHolder: PXCardHolder?, customerId: String?, dateCreated: Date?, lastUpdated: Date?, expirationMonth: Int, expirationYear: Int, firstSixDigits: String, id: String, issuer: PXIssuer, lastFourDigits: String, paymentMethod: PXPaymentMethod, securityCode: PXSecurityCode) {
+    init(cardHolder: PXCardHolder?, customerId: String?, dateCreated: Date?, dateLastUpdated: Date?, expirationMonth: Int, expirationYear: Int, firstSixDigits: String, id: String, issuer: PXIssuer, lastFourDigits: String, paymentMethod: PXPaymentMethod, securityCode: PXSecurityCode) {
 
         self.cardHolder = cardHolder
         self.customerId = customerId
         self.dateCreated = dateCreated
-        self.lastUpdated = lastUpdated
+        self.dateLastUpdated = dateLastUpdated
         self.expirationMonth = expirationMonth
         self.expirationYear = expirationYear
         self.firstSixDigits = firstSixDigits
@@ -41,7 +41,7 @@ open class PXCard: NSObject, Codable {
         case cardHolder = "cardholder"
         case customerId = "customer_id"
         case dateCreated = "date_created"
-        case lastUpdated = "last_Updated"
+        case dateLastUpdated = "last_Updated"
         case expirationMonth = "expiration_month"
         case expirationYear = "expiration_year"
         case firstSixDigits = "first_six_digits"
@@ -56,8 +56,8 @@ open class PXCard: NSObject, Codable {
         let container = try decoder.container(keyedBy: PXCardKeys.self)
         let cardHolder: PXCardHolder? = try container.decodeIfPresent(PXCardHolder.self, forKey: .cardHolder)
         let customerId: String? = try container.decodeIfPresent(String.self, forKey: .customerId)
-        //        let dateCreated: Date? = try container.decodeIfPresent(Date.self, forKey: .dateCreated)
-        //        let lastUpdated: Date? = try container.decodeIfPresent(Date.self, forKey: .lastUpdated)
+        let dateCreatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateCreated)
+        let dateLastUpdatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateLastUpdated)
         let expirationMonth: Int = try container.decode(Int.self, forKey: .expirationMonth)
         let expirationYear: Int = try container.decode(Int.self, forKey: .expirationYear)
         let firstSixDigits: String = try container.decode(String.self, forKey: .firstSixDigits)
@@ -67,9 +67,10 @@ open class PXCard: NSObject, Codable {
         let paymentMethod: PXPaymentMethod = try container.decode(PXPaymentMethod.self, forKey: .paymentMethod)
         let securityCode: PXSecurityCode = try container.decode(PXSecurityCode.self, forKey: .securityCode)
 
-        // TODO: Agrgegar
+        let dateCreated = String.getDate(dateCreatedString)
+        let dateLastUpdated = String.getDate(dateLastUpdatedString)
 
-        self.init(cardHolder: cardHolder, customerId: customerId, dateCreated: nil, lastUpdated: nil, expirationMonth: expirationMonth, expirationYear: expirationYear, firstSixDigits: firstSixDigits, id: id, issuer: issuer, lastFourDigits: lastFourDigits, paymentMethod: paymentMethod, securityCode: securityCode)
+        self.init(cardHolder: cardHolder, customerId: customerId, dateCreated: dateCreated, dateLastUpdated: dateLastUpdated, expirationMonth: expirationMonth, expirationYear: expirationYear, firstSixDigits: firstSixDigits, id: id, issuer: issuer, lastFourDigits: lastFourDigits, paymentMethod: paymentMethod, securityCode: securityCode)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -77,7 +78,7 @@ open class PXCard: NSObject, Codable {
         try container.encodeIfPresent(self.cardHolder, forKey: .cardHolder)
         try container.encodeIfPresent(self.customerId, forKey: .customerId)
         try container.encodeIfPresent(self.dateCreated, forKey: .dateCreated)
-        try container.encodeIfPresent(self.lastUpdated, forKey: .lastUpdated)
+        try container.encodeIfPresent(self.dateLastUpdated, forKey: .dateLastUpdated)
         try container.encodeIfPresent(self.expirationMonth, forKey: .expirationMonth)
         try container.encodeIfPresent(self.expirationYear, forKey: .expirationYear)
         try container.encodeIfPresent(self.firstSixDigits, forKey: .firstSixDigits)
@@ -99,7 +100,7 @@ open class PXCard: NSObject, Codable {
         return try encoder.encode(self)
     }
 
-    open class func fromJSON(data: Data) throws -> PXCard {
+    open class func fromJSONToPXCard(data: Data) throws -> PXCard {
         return try JSONDecoder().decode(PXCard.self, from: data)
     }
 

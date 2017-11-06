@@ -79,22 +79,9 @@ open class PXCustomer: NSObject, Codable {
         let phone: PXPhone = try container.decode(PXPhone.self, forKey: .phone)
         let registrationDateString: String? = try container.decodeIfPresent(String.self, forKey: .registrationDate)
 
-        func getDateFromString(_ string: String?) -> Date? {
-            if let dateString = string {
-                let dateFormatter = DateFormatter()
-                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZw"
-                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-                let date = dateFormatter.date(from: dateString)
-                return date
-            } else {
-                return nil
-            }
-        }
-
-        let dateLastUpdated = getDateFromString(dateLastUpdatedString)
-        let dateCreated = getDateFromString(dateCreatedString)
-        let registrationDate = getDateFromString(registrationDateString)
+        let dateLastUpdated = String.getDate(dateLastUpdatedString)
+        let dateCreated = String.getDate(dateCreatedString)
+        let registrationDate = String.getDate(registrationDateString)
 
         self.init(address: address, cards: cards, defaultCard: defaultCard, description: _description, dateCreated: dateCreated, dateLastUpdated: dateLastUpdated, email: email, firstName: firstName, id: id, identification: identification, lastName: lastName, liveMode: liveMode, metadata: metadata, phone: phone, registrationDate: registrationDate)
     }
@@ -117,19 +104,7 @@ open class PXCustomer: NSObject, Codable {
         try container.encodeIfPresent(self.phone, forKey: .phone)
         try container.encodeIfPresent(self.registrationDate, forKey: .registrationDate)
     }
-
-    open func getDateFromString(_ string: String?) -> Date? {
-        if let dateString = string {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
-            dateFormatter.locale = Locale(identifier: "en_US")
-            let date = dateFormatter.date(from: dateString)
-            return date
-        } else {
-            return nil
-        }
-    }
-
+    
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
@@ -141,7 +116,7 @@ open class PXCustomer: NSObject, Codable {
         return try encoder.encode(self)
     }
 
-    open class func fromJSON(data: Data) throws -> PXCustomer {
+    open class func fromJSONToPXCustomer(data: Data) throws -> PXCustomer {
         return try JSONDecoder().decode(PXCustomer.self, from: data)
     }
 
