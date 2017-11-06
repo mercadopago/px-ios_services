@@ -9,12 +9,12 @@
 import Foundation
 open class PXCardToken: NSObject, Codable {
 
-    open var cardholder: PXCardHolder!
-    open var cardNumber: String!
+    open var cardholder: PXCardHolder?
+    open var cardNumber: String?
     open var device: PXDevice = PXDevice()
-    open var expirationMonth: Int!
-    open var expirationYear: Int!
-    open var securityCode: String!
+    open var expirationMonth: Int?
+    open var expirationYear: Int?
+    open var securityCode: String?
 
     // For validations
     let MIN_LENGTH_NUMBER: Int = 10

@@ -9,9 +9,9 @@
 import Foundation
 open class PXFinancialInstitution: NSObject, Codable {
     open var id: String!
-    open var _description: String!
+    open var _description: String?
 
-    init(id: String, description: String) {
+    init(id: String, description: String?) {
         self.id = id
         self._description = description
     }
@@ -24,7 +24,7 @@ open class PXFinancialInstitution: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXFinancialInstitutionKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
-        let description: String = try container.decode(String.self, forKey: .description)
+        let description: String? = try container.decodeIfPresent(String.self, forKey: .description)
 
         self.init(id: id, description: description)
     }

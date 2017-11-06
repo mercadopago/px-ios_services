@@ -9,9 +9,9 @@
 import Foundation
 open class PXSavedCardToken: NSObject, Codable {
 
-    open var cardId: String!
-    open var securityCode: String!
-    open var device: PXDevice!
+    open var cardId: String?
+    open var securityCode: String?
+    open var device: PXDevice?
 
     public enum PXSavedCardTokenKeys: String, CodingKey {
         case cardId = "card_id"
