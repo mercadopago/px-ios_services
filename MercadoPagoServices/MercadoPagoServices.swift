@@ -57,7 +57,7 @@ open class MercadoPagoServices: NSObject {
         paymentMethodSearchService.getPaymentMethods(amount, defaultPaymenMethodId: defaultPaymentMethod, excludedPaymentTypeIds: excludedPaymentTypesIds, excludedPaymentMethodIds: excludedPaymentMethodsIds, site: site, payer: payer, language: language, success: callback, failure: failure)
     }
 
-    open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, query: [String : String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
         var headers: [String: String]?
         if !String.isNullOrEmpty(transactionId), let transactionId = transactionId {
@@ -65,8 +65,12 @@ open class MercadoPagoServices: NSObject {
         } else {
             headers = nil
         }
+        var params = ""
+        if let queryParams = query as NSDictionary? {
+            params = queryParams.parseToQuery()
+        }
 
-        service.createPayment(headers: headers, body: paymentData.toJsonString(), success: callback, failure: failure)
+        service.createPayment(headers: headers, body: paymentData.toJsonString(), params: params, success: callback, failure: failure)
     }
 
     open func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {

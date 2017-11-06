@@ -41,9 +41,9 @@ open class CustomService: MercadoPagoService {
         }, failure: failure)
     }
 
-    open func createPayment(_ method: String = "POST", headers: [String:String]? = nil, body: String, success: @escaping (_ jsonResult: PXPayment) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func createPayment(_ method: String = "POST", headers: [String:String]? = nil, body: String, params: String?, success: @escaping (_ jsonResult: PXPayment) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
-        self.request(uri: self.URI, params: nil, body: body, method: method, headers : headers, cache: false, success: { (data: Data) -> Void in
+        self.request(uri: self.URI, params: params, body: body, method: method, headers : headers, cache: false, success: { (data: Data) -> Void in
                             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
