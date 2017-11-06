@@ -9,14 +9,14 @@
 import Foundation
 open class PXPaymentMethodSearchItem: NSObject, Codable {
     open var id: String!
-    open var type: String!
-    open var _description: String!
+    open var type: String?
+    open var _description: String?
     open var comment: String?
     open var children: [PXPaymentMethodSearchItem]?
     open var childrenHeader: String?
-    open var showIcon: Bool!
+    open var showIcon: Bool?
 
-    init(id: String, type: String, description: String, comment: String?, children: [PXPaymentMethodSearchItem]?, childrenHeader: String?, showIcon: Bool) {
+    init(id: String, type: String?, description: String?, comment: String?, children: [PXPaymentMethodSearchItem]?, childrenHeader: String?, showIcon: Bool?) {
         self.id = id
         self.type = type
         self._description = description
@@ -39,12 +39,12 @@ open class PXPaymentMethodSearchItem: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPaymentMethodSearchItemKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
-        let type: String = try container.decode(String.self, forKey: .type)
-        let description: String = try container.decode(String.self, forKey: .description)
+        let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
+        let description: String? = try container.decodeIfPresent(String.self, forKey: .description)
         let comment: String? = try container.decodeIfPresent(String.self, forKey: .comment)
         let children: [PXPaymentMethodSearchItem]? = try container.decodeIfPresent([PXPaymentMethodSearchItem].self, forKey: .children)
         let childrenHeader: String? = try container.decodeIfPresent(String.self, forKey: .childrenHeader)
-        let showIcon: Bool = try container.decode(Bool.self, forKey: .showIcon)
+        let showIcon: Bool? = try container.decodeIfPresent(Bool.self, forKey: .showIcon)
 
         self.init(id: id, type: type, description: description, comment: comment, children: children, childrenHeader: childrenHeader, showIcon: showIcon)
     }

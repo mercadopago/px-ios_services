@@ -9,11 +9,11 @@
 import Foundation
 open class PXCustomOptionSearchItem: NSObject, Codable {
     open var id: String!
-    open var _description: String!
-    open var paymentMethodId: String!
-    open var paymentTypeId: String!
+    open var _description: String?
+    open var paymentMethodId: String?
+    open var paymentTypeId: String?
 
-    init(id: String, description: String, paymentMethodId: String, paymentTypeId: String) {
+    init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?) {
         self.id = id
         self._description = description
         self.paymentMethodId = paymentMethodId
@@ -30,9 +30,9 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCustomOptionSearchItemKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
-        let description: String = try container.decode(String.self, forKey: .description)
-        let paymentMethodId: String = try container.decode(String.self, forKey: .paymentMethodId)
-        let paymentTypeId: String = try container.decode(String.self, forKey: .paymentTypeId)
+        let description: String? = try container.decodeIfPresent(String.self, forKey: .description)
+        let paymentMethodId: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodId)
+        let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
 
         self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId)
     }

@@ -8,11 +8,11 @@
 
 import Foundation
 open class PXFeeDetail: NSObject, Codable {
-    open var amount: Double!
-    open var feePayer: String!
-    open var type: String!
+    open var amount: Double?
+    open var feePayer: String?
+    open var type: String?
 
-    init(amount: Double, feePayer: String, type: String) {
+    init(amount: Double?, feePayer: String?, type: String?) {
         self.amount = amount
         self.feePayer = feePayer
         self.type = type
@@ -26,9 +26,9 @@ open class PXFeeDetail: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXFeeDetailKeys.self)
-        let amount: Double = try container.decode(Double.self, forKey: .amount)
-        let feePayer: String = try container.decode(String.self, forKey: .feePayer)
-        let type: String = try container.decode(String.self, forKey: .type)
+        let amount: Double? = try container.decodeIfPresent(Double.self, forKey: .amount)
+        let feePayer: String? = try container.decodeIfPresent(String.self, forKey: .feePayer)
+        let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
 
         self.init(amount: amount, feePayer: feePayer, type: type)
     }

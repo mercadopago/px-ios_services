@@ -9,9 +9,9 @@
 import Foundation
 open class PXIssuer: NSObject, Codable {
     open var id: String!
-    open var name: String!
+    open var name: String?
 
-    init(id: String, name: String) {
+    init(id: String, name: String?) {
         self.id = id
         self.name = name
     }
@@ -23,7 +23,7 @@ open class PXIssuer: NSObject, Codable {
     
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXIssuerKeys.self)
-        let name: String = try container.decode(String.self, forKey: .name)
+        let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
         var id = ""
         do {
             let intId = try container.decodeIfPresent(Int.self, forKey: .id)

@@ -9,12 +9,12 @@
 import Foundation
 open class PXIdentificationType: NSObject, Codable {
     open var id: String!
-    open var name: String!
-    open var minLength: Int!
-    open var maxLength: Int!
-    open var type: String!
+    open var name: String?
+    open var minLength: Int?
+    open var maxLength: Int?
+    open var type: String?
 
-    init(id: String, name: String, minLength: Int, maxLength: Int, type: String) {
+    init(id: String, name: String?, minLength: Int?, maxLength: Int?, type: String?) {
         self.id = id
         self.name = name
         self.minLength = minLength
@@ -32,11 +32,11 @@ open class PXIdentificationType: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXIdentificationTypeKeys.self)
-        let minLength: Int = try container.decode(Int.self, forKey: .minLength)
-        let maxLength: Int = try container.decode(Int.self, forKey: .maxLength)
+        let minLength: Int? = try container.decodeIfPresent(Int.self, forKey: .minLength)
+        let maxLength: Int? = try container.decodeIfPresent(Int.self, forKey: .maxLength)
         let id: String = try container.decode(String.self, forKey: .id)
-        let name: String = try container.decode(String.self, forKey: .name)
-        let type: String = try container.decode(String.self, forKey: .type)
+        let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
+        let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
 
         self.init(id: id, name: name, minLength: minLength, maxLength: maxLength, type: type)
     }

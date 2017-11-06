@@ -12,16 +12,16 @@ open class PXBankDeal: NSObject, Codable {
     open var id: String!
     open var dateExpired: Date?
     open var dateStarted: Date?
-    open var installments: [Int]!
-    open var issuer: PXIssuer!
-    open var legals: String!
-    open var picture: PXPicture!
-    open var maxInstallments: Int!
-    open var paymentMethods: [PXPaymentMethod]!
-    open var recommendedMessage: String!
-    open var totalFinancialCost: Double!
+    open var installments: [Int]?
+    open var issuer: PXIssuer?
+    open var legals: String?
+    open var picture: PXPicture?
+    open var maxInstallments: Int?
+    open var paymentMethods: [PXPaymentMethod]?
+    open var recommendedMessage: String?
+    open var totalFinancialCost: Double?
 
-    init(id: String, dateExpired: Date?, dateStarted: Date?, installments: [Int], issuer: PXIssuer, legals: String, picture: PXPicture, maxInstallments: Int, paymentMethods: [PXPaymentMethod], recommendedMessage: String, totalFinancialCost: Double) {
+    init(id: String, dateExpired: Date?, dateStarted: Date?, installments: [Int]?, issuer: PXIssuer?, legals: String?, picture: PXPicture?, maxInstallments: Int?, paymentMethods: [PXPaymentMethod]?, recommendedMessage: String?, totalFinancialCost: Double?) {
         self.id = id
         self.dateExpired = dateExpired
         self.dateStarted = dateStarted
@@ -51,17 +51,17 @@ open class PXBankDeal: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXBankDealKeys.self)
-        let installments: [Int] = try container.decode([Int].self, forKey: .installments)
+        let installments: [Int]? = try container.decodeIfPresent([Int].self, forKey: .installments)
         let dateExpiredString: String? = try container.decodeIfPresent(String.self, forKey: .dateExpired)
         let dateStartedString: String? = try container.decodeIfPresent(String.self, forKey: .dateStarted)
-        let maxInstallments: Int = try container.decode(Int.self, forKey: .maxInstallments)
-        let paymentMethods: [PXPaymentMethod] = try container.decode([PXPaymentMethod].self, forKey: .paymentMethods)
+        let maxInstallments: Int? = try container.decodeIfPresent(Int.self, forKey: .maxInstallments)
+        let paymentMethods: [PXPaymentMethod]? = try container.decodeIfPresent([PXPaymentMethod].self, forKey: .paymentMethods)
         let id: String = try container.decode(String.self, forKey: .id)
-        let issuer: PXIssuer = try container.decode(PXIssuer.self, forKey: .issuer)
-        let legals: String = try container.decode(String.self, forKey: .legals)
-        let picture: PXPicture = try container.decode(PXPicture.self, forKey: .picture)
-        let recommendedMessage: String = try container.decode(String.self, forKey: .recommendedMessage)
-        let totalFinancialCost: Double = try container.decode(Double.self, forKey: .totalFinancialCost)
+        let issuer: PXIssuer? = try container.decodeIfPresent(PXIssuer.self, forKey: .issuer)
+        let legals: String? = try container.decodeIfPresent(String.self, forKey: .legals)
+        let picture: PXPicture? = try container.decodeIfPresent(PXPicture.self, forKey: .picture)
+        let recommendedMessage: String? = try container.decodeIfPresent(String.self, forKey: .recommendedMessage)
+        let totalFinancialCost: Double? = try container.decodeIfPresent(Double.self, forKey: .totalFinancialCost)
         
         let dateExpired = String.getDate(dateExpiredString)
         let dateStarted = String.getDate(dateStartedString)

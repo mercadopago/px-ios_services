@@ -10,7 +10,7 @@ import Foundation
 open class PXOrder: NSObject, Codable {
 
     open var id: String!
-    open var type: String!
+    open var type: String?
 
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()

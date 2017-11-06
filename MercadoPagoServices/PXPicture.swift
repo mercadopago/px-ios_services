@@ -9,11 +9,11 @@
 import Foundation
 open class PXPicture: NSObject, Codable {
     open var id: String!
-    open var size: String!
-    open var url: String!
-    open var secureUrl: String!
+    open var size: String?
+    open var url: String?
+    open var secureUrl: String?
 
-    public init(id: String, size: String, url: String, secureUrl: String) {
+    public init(id: String, size: String?, url: String?, secureUrl: String?) {
         self.id = id
         self.size = size
         self.url = url
@@ -30,9 +30,9 @@ open class PXPicture: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPictureKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
-        let size: String = try container.decode(String.self, forKey: .size)
-        let url: String = try container.decode(String.self, forKey: .url)
-        let secureUrl: String = try container.decode(String.self, forKey: .secureUrl)
+        let size: String? = try container.decodeIfPresent(String.self, forKey: .size)
+        let url: String? = try container.decodeIfPresent(String.self, forKey: .url)
+        let secureUrl: String? = try container.decodeIfPresent(String.self, forKey: .secureUrl)
 
         self.init(id: id, size: size, url: url, secureUrl: secureUrl)
     }

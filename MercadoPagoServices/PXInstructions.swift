@@ -8,10 +8,10 @@
 
 import Foundation
 open class PXInstructions: NSObject, Codable {
-    open var amountInfo: PXAmountInfo!
-    open var instructions: [PXInstruction]!
+    open var amountInfo: PXAmountInfo?
+    open var instructions: [PXInstruction]?
 
-    init(amountInfo: PXAmountInfo, instructions: [PXInstruction]) {
+    init(amountInfo: PXAmountInfo?, instructions: [PXInstruction]?) {
         self.amountInfo = amountInfo
         self.instructions = instructions
     }
@@ -24,8 +24,8 @@ open class PXInstructions: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstructionsKeys.self)
-        let amountInfo: PXAmountInfo = try container.decode(PXAmountInfo.self, forKey: .amountInfo)
-        let instructions: [PXInstruction] = try container.decode([PXInstruction].self, forKey: .instructions)
+        let amountInfo: PXAmountInfo? = try container.decodeIfPresent(PXAmountInfo.self, forKey: .amountInfo)
+        let instructions: [PXInstruction]? = try container.decodeIfPresent([PXInstruction].self, forKey: .instructions)
 
         self.init(amountInfo: amountInfo, instructions: instructions)
     }

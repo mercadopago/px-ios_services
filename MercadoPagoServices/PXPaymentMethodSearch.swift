@@ -8,13 +8,13 @@
 
 import Foundation
 open class PXPaymentMethodSearch: NSObject, Codable {
-    open var paymentMethodSearchItem: [PXPaymentMethodSearchItem]!
-    open var customOptionSearchItems: [PXCustomOptionSearchItem]!
-    open var paymentMethods: [PXPaymentMethod]!
-    open var cards: [PXCard]!
+    open var paymentMethodSearchItem: [PXPaymentMethodSearchItem]?
+    open var customOptionSearchItems: [PXCustomOptionSearchItem]?
+    open var paymentMethods: [PXPaymentMethod]?
+    open var cards: [PXCard]?
     open var defaultOption: PXPaymentMethodSearchItem?
 
-    init(paymentMethodSearchItem: [PXPaymentMethodSearchItem], customOptionSearchItems: [PXCustomOptionSearchItem], paymentMethods: [PXPaymentMethod], cards: [PXCard], defaultOption: PXPaymentMethodSearchItem?) {
+    init(paymentMethodSearchItem: [PXPaymentMethodSearchItem]?, customOptionSearchItems: [PXCustomOptionSearchItem]?, paymentMethods: [PXPaymentMethod]?, cards: [PXCard]?, defaultOption: PXPaymentMethodSearchItem?) {
         self.paymentMethodSearchItem = paymentMethodSearchItem
         self.customOptionSearchItems = customOptionSearchItems
         self.paymentMethods = paymentMethods
@@ -32,10 +32,10 @@ open class PXPaymentMethodSearch: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPaymentMethodSearchKeys.self)
-        let paymentMethodSearchItem: [PXPaymentMethodSearchItem] = try container.decode([PXPaymentMethodSearchItem].self, forKey: .paymentMethodSearchItem)
-        let customOptionSearchItems: [PXCustomOptionSearchItem] = try container.decode([PXCustomOptionSearchItem].self, forKey: .customOptionSearchItems)
-        let paymentMethods: [PXPaymentMethod] = try container.decode([PXPaymentMethod].self, forKey: .paymentMethods)
-        let cards: [PXCard] = try container.decode([PXCard].self, forKey: .cards)
+        let paymentMethodSearchItem: [PXPaymentMethodSearchItem]? = try container.decodeIfPresent([PXPaymentMethodSearchItem].self, forKey: .paymentMethodSearchItem)
+        let customOptionSearchItems: [PXCustomOptionSearchItem]? = try container.decodeIfPresent([PXCustomOptionSearchItem].self, forKey: .customOptionSearchItems)
+        let paymentMethods: [PXPaymentMethod]? = try container.decodeIfPresent([PXPaymentMethod].self, forKey: .paymentMethods)
+        let cards: [PXCard]? = try container.decodeIfPresent([PXCard].self, forKey: .cards)
         let defaultOption: PXPaymentMethodSearchItem? = try container.decodeIfPresent(PXPaymentMethodSearchItem.self, forKey: .defaultOption)
 
         self.init(paymentMethodSearchItem: paymentMethodSearchItem, customOptionSearchItems: customOptionSearchItems, paymentMethods: paymentMethods, cards: cards, defaultOption: defaultOption)

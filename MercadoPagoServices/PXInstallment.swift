@@ -8,12 +8,12 @@
 
 import Foundation
 open class PXInstallment: NSObject, Codable {
-    open var issuer: PXIssuer!
-    open var payerCosts: [PXPayerCost]!
-    open var paymentMethodId: String!
-    open var paymentTypeId: String!
+    open var issuer: PXIssuer?
+    open var payerCosts: [PXPayerCost]?
+    open var paymentMethodId: String?
+    open var paymentTypeId: String?
 
-    public init(issuer: PXIssuer, payerCosts: [PXPayerCost], paymentMethodId: String, paymentTypeId: String) {
+    public init(issuer: PXIssuer?, payerCosts: [PXPayerCost]?, paymentMethodId: String?, paymentTypeId: String?) {
         self.issuer = issuer
         self.payerCosts = payerCosts
         self.paymentMethodId = paymentMethodId
@@ -29,10 +29,10 @@ open class PXInstallment: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstallmentKeys.self)
-        let issuer: PXIssuer = try container.decode(PXIssuer.self, forKey: .issuer)
-        let payerCosts: [PXPayerCost] = try container.decode([PXPayerCost].self, forKey: .payerCosts)
-        let paymentMethodId: String = try container.decode(String.self, forKey: .paymentMethodId)
-        let paymentTypeId: String = try container.decode(String.self, forKey: .paymentTypeId)
+        let issuer: PXIssuer? = try container.decodeIfPresent(PXIssuer.self, forKey: .issuer)
+        let payerCosts: [PXPayerCost]? = try container.decodeIfPresent([PXPayerCost].self, forKey: .payerCosts)
+        let paymentMethodId: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodId)
+        let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
 
         self.init(issuer: issuer, payerCosts: payerCosts, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId)
     }

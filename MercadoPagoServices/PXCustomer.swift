@@ -8,23 +8,23 @@
 
 import Foundation
 open class PXCustomer: NSObject, Codable {
-    open var address: PXAddress!
-    open var cards: [PXCard]!
-    open var defaultCard: String!
+    open var address: PXAddress?
+    open var cards: [PXCard]?
+    open var defaultCard: String?
     open var _description: String?
     open var dateCreated: Date?
     open var dateLastUpdated: Date?
-    open var email: String!
+    open var email: String?
     open var firstName: String?
     open var id: String!
-    open var identification: PXIdentification!
+    open var identification: PXIdentification?
     open var lastName: String?
-    open var liveMode: Bool!
-    open var metadata: [String: String]!
-    open var phone: PXPhone!
+    open var liveMode: Bool?
+    open var metadata: [String: String]?
+    open var phone: PXPhone?
     open var registrationDate: Date?
 
-    init(address: PXAddress, cards: [PXCard], defaultCard: String, description: String?, dateCreated: Date?, dateLastUpdated: Date?, email: String, firstName: String?, id: String, identification: PXIdentification, lastName: String?, liveMode: Bool, metadata: [String : String], phone: PXPhone, registrationDate: Date?) {
+    init(address: PXAddress?, cards: [PXCard]?, defaultCard: String?, description: String?, dateCreated: Date?, dateLastUpdated: Date?, email: String?, firstName: String?, id: String, identification: PXIdentification?, lastName: String?, liveMode: Bool?, metadata: [String : String]?, phone: PXPhone?, registrationDate: Date?) {
 
         self.address = address
         self.cards = cards
@@ -63,20 +63,20 @@ open class PXCustomer: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCustomerKeys.self)
-        let address: PXAddress = try container.decode(PXAddress.self, forKey: .address)
-        let cards: [PXCard] = try container.decode([PXCard].self, forKey: .cards)
-        let defaultCard: String = try container.decode(String.self, forKey: .defaultCard)
+        let address: PXAddress? = try container.decodeIfPresent(PXAddress.self, forKey: .address)
+        let cards: [PXCard]? = try container.decodeIfPresent([PXCard].self, forKey: .cards)
+        let defaultCard: String? = try container.decodeIfPresent(String.self, forKey: .defaultCard)
         let _description: String? = try container.decodeIfPresent(String.self, forKey: ._description)
         let dateLastUpdatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateLastUpdated)
         let dateCreatedString: String? = try container.decodeIfPresent(String.self, forKey: .dateCreated)
-        let email: String = try container.decode(String.self, forKey: .email)
+        let email: String? = try container.decodeIfPresent(String.self, forKey: .email)
         let firstName: String? = try container.decodeIfPresent(String.self, forKey: .firstName)
         let id: String = try container.decode(String.self, forKey: .id)
-        let identification: PXIdentification = try container.decode(PXIdentification.self, forKey: .identification)
+        let identification: PXIdentification? = try container.decodeIfPresent(PXIdentification.self, forKey: .identification)
         let lastName: String? = try container.decodeIfPresent(String.self, forKey: .lastName)
-        let liveMode: Bool = try container.decode(Bool.self, forKey: .liveMode)
-        let metadata: [String: String] = try container.decode([String: String].self, forKey: .metadata)
-        let phone: PXPhone = try container.decode(PXPhone.self, forKey: .phone)
+        let liveMode: Bool? = try container.decodeIfPresent(Bool.self, forKey: .liveMode)
+        let metadata: [String: String]? = try container.decodeIfPresent([String: String].self, forKey: .metadata)
+        let phone: PXPhone? = try container.decodeIfPresent(PXPhone.self, forKey: .phone)
         let registrationDateString: String? = try container.decodeIfPresent(String.self, forKey: .registrationDate)
 
         let dateLastUpdated = String.getDate(dateLastUpdatedString)

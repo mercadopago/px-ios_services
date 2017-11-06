@@ -9,15 +9,15 @@
 import Foundation
 open class PXDiscount: NSObject, Codable {
     open var id: String!
-    open var name: String!
-    open var percentOff: Double!
-    open var amountOff: Double!
-    open var couponAmount: Double!
-    open var currencyId: String!
-    open var couponCode: String!
-    open var concept: String!
+    open var name: String?
+    open var percentOff: Double?
+    open var amountOff: Double?
+    open var couponAmount: Double?
+    open var currencyId: String?
+    open var couponCode: String?
+    open var concept: String?
 
-    init(id: String, name: String, percentOff: Double, amountOff: Double, couponAmount: Double, currencyId: String, couponCode: String, concept: String) {
+    init(id: String, name: String?, percentOff: Double?, amountOff: Double?, couponAmount: Double?, currencyId: String?, couponCode: String?, concept: String?) {
         self.id = id
         self.name = name
         self.percentOff = percentOff
@@ -41,14 +41,14 @@ open class PXDiscount: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXDiscountKeys.self)
-        let percentOff: Double = try container.decode(Double.self, forKey: .percentOff)
-        let amountOff: Double = try container.decode(Double.self, forKey: .amountOff)
-        let couponAmount: Double = try container.decode(Double.self, forKey: .couponAmount)
+        let percentOff: Double? = try container.decodeIfPresent(Double.self, forKey: .percentOff)
+        let amountOff: Double? = try container.decodeIfPresent(Double.self, forKey: .amountOff)
+        let couponAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .couponAmount)
         let id: String = try container.decode(String.self, forKey: .id)
-        let name: String = try container.decode(String.self, forKey: .name)
-        let currencyId: String = try container.decode(String.self, forKey: .currencyId)
-        let couponCode: String = try container.decode(String.self, forKey: .couponCode)
-        let concept: String = try container.decode(String.self, forKey: .concept)
+        let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
+        let currencyId: String? = try container.decodeIfPresent(String.self, forKey: .currencyId)
+        let couponCode: String? = try container.decodeIfPresent(String.self, forKey: .couponCode)
+        let concept: String? = try container.decodeIfPresent(String.self, forKey: .concept)
 
         self.init(id: id, name: name, percentOff: percentOff, amountOff: amountOff, couponAmount: couponAmount, currencyId: currencyId, couponCode: couponCode, concept: concept)
     }

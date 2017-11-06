@@ -19,3 +19,9 @@ extension Int64 {
         return "\(self)"
     }
 }
+
+extension Double {
+    public var stringValue:String {
+        return "\(self)"
+    }
+}
