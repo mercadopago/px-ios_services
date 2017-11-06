@@ -7,7 +7,7 @@
 //
 
 import Foundation
-open class PXApiException: NSObject {
+open class PXApiException: NSObject, Codable {
 
     open static let CUSTOMER_NOT_ALLOWED_TO_OPERATE = "2021"
     open static let COLLECTOR_NOT_ALLOWED_TO_OPERATE = "2022"
@@ -36,9 +36,24 @@ open class PXApiException: NSObject {
     open static let INVALID_ESC = "E216"
     open static let INVALID_FINGERPRINT = "E217"
 
-    open var cause: [PXCause]!
-    open var error: String!
-    open var message: String!
-    open var status: Int!
+    open var cause: [PXCause]?
+    open var error: String?
+    open var message: String?
+    open var status: Int?
+
+    open func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    open func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    open class func fromJSON(data: Data) throws -> PXApiException {
+        return try JSONDecoder().decode(PXApiException.self, from: data)
+    }
 
 }
