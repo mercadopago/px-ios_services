@@ -36,6 +36,12 @@ open class MercadoPagoServices: NSObject {
         self.merchantPublicKey = merchantPublicKey
         self.payerAccessToken = payerAccessToken
         self.procesingMode = procesingMode
+        super.init()
+        initMercadPagoPXTracking()
+    }
+
+    func initMercadPagoPXTracking() {
+        MPXTracker.setPublicKey(merchantPublicKey)
     }
 
     open func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -203,9 +209,7 @@ open class MercadoPagoServices: NSObject {
     }
 
     public func getCampaigns(callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
             let discountService = DiscountService(baseURL: getMerchantDiscountBaseURL, URI: getMerchantDiscountURI)
-
             discountService.getCampaigns(publicKey: merchantPublicKey, success: callback, failure: failure)
         }
 

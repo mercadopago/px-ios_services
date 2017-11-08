@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoPXTracking
 
 open class CustomService: MercadoPagoService {
 
@@ -57,7 +58,11 @@ open class CustomService: MercadoPagoService {
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {
-                        success(try! PXPayment.fromJSON(data: data))
+                        let payment = try! PXPayment.fromJSON(data: data)
+                        if !payment.isCardPaymentType() {
+                            MPXTracker.trackPaymentOff(paymentId: payment.id)
+                        }
+                        success(payment)
                     } else {
                         failure?(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: PXApitUtil.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR"]))
                     }

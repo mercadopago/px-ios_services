@@ -233,6 +233,10 @@ open class PXPayment: NSObject, Codable {
         return try JSONDecoder().decode(PXPayment.self, from: data)
     }
 
+    open func isCardPaymentType() -> Bool {
+        return self.paymentTypeId == PXPaymentTypes.CREDIT_CARD || self.paymentTypeId == PXPaymentTypes.DEBIT_CARD || paymentTypeId == PXPaymentTypes.PREPAID_CARD
+    }
+
 }
 
 extension PXPayment {
