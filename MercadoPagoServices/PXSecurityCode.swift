@@ -9,11 +9,11 @@
 import Foundation
 open class PXSecurityCode: NSObject, Codable {
 
-    open var cardLocation: String!
+    open var cardLocation: String?
     open var mode: String?
-    open var length: Int!
+    open var length: Int?
 
-    init(cardLocation: String, mode: String?, length: Int) {
+    init(cardLocation: String?, mode: String?, length: Int?) {
         self.cardLocation = cardLocation
         self.mode = mode
         self.length = length
@@ -27,9 +27,9 @@ open class PXSecurityCode: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXSecurityCodeKeys.self)
-        let cardLocation: String = try container.decode(String.self, forKey: .cardLocation)
+        let cardLocation: String? = try container.decodeIfPresent(String.self, forKey: .cardLocation)
         let mode: String? = try container.decodeIfPresent(String.self, forKey: .mode)
-        let length: Int = try container.decode(Int.self, forKey: .length)
+        let length: Int? = try container.decodeIfPresent(Int.self, forKey: .length)
 
         self.init(cardLocation: cardLocation, mode: mode, length: length)
     }

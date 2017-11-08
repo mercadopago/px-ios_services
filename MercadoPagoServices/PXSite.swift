@@ -10,9 +10,9 @@ import Foundation
 open class PXSite: NSObject, Codable {
 
     open var id: String!
-    open var currencyId: String!
+    open var currencyId: String?
 
-    public init(id: String, currencyId: String) {
+    public init(id: String, currencyId: String?) {
         self.id = id
         self.currencyId = currencyId
     }
@@ -25,7 +25,7 @@ open class PXSite: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXSiteKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
-        let currencyId: String = try container.decode(String.self, forKey: .currencyId)
+        let currencyId: String? = try container.decodeIfPresent(String.self, forKey: .currencyId)
 
         self.init(id: id, currencyId: currencyId)
     }

@@ -9,16 +9,16 @@
 import Foundation
 open class PXItem: NSObject, Codable {
 
-    open var categoryId: String!
-    open var currencyId: String!
-    open var _description: String!
+    open var categoryId: String?
+    open var currencyId: String?
+    open var _description: String?
     open var id: String!
-    open var pictureUrl: String!
-    open var quantity: Int!
-    open var title: String!
-    open var unitPrice: Double!
+    open var pictureUrl: String?
+    open var quantity: Int?
+    open var title: String?
+    open var unitPrice: Double?
 
-    init(categoryId: String, currencyId: String, description: String, id: String, pictureUrl: String, quantity: Int, title: String, unitPrice: Double) {
+    init(categoryId: String?, currencyId: String?, description: String?, id: String, pictureUrl: String?, quantity: Int?, title: String?, unitPrice: Double?) {
         self.categoryId = categoryId
         self.currencyId = currencyId
         self._description = description
@@ -42,14 +42,14 @@ open class PXItem: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXItemKeys.self)
-        let categoryId: String = try container.decode(String.self, forKey: .categoryId)
-        let currencyId: String = try container.decode(String.self, forKey: .currencyId)
-        let description: String = try container.decode(String.self, forKey: .description)
+        let categoryId: String? = try container.decodeIfPresent(String.self, forKey: .categoryId)
+        let currencyId: String? = try container.decodeIfPresent(String.self, forKey: .currencyId)
+        let description: String? = try container.decodeIfPresent(String.self, forKey: .description)
         let id: String = try container.decode(String.self, forKey: .id)
-        let pictureUrl: String = try container.decode(String.self, forKey: .pictureUrl)
-        let title: String = try container.decode(String.self, forKey: .title)
-        let unitPrice: Double = try container.decode(Double.self, forKey: .unitPrice)
-        let quantity: Int = try container.decode(Int.self, forKey: .quantity)
+        let pictureUrl: String? = try container.decodeIfPresent(String.self, forKey: .pictureUrl)
+        let title: String? = try container.decodeIfPresent(String.self, forKey: .title)
+        let unitPrice: Double? = try container.decodeIfPresent(Double.self, forKey: .unitPrice)
+        let quantity: Int? = try container.decodeIfPresent(Int.self, forKey: .quantity)
 
         self.init(categoryId: categoryId, currencyId: currencyId, description: description, id: id, pictureUrl: pictureUrl, quantity: quantity, title: title, unitPrice: unitPrice)
     }

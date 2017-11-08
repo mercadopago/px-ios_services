@@ -10,13 +10,13 @@ import Foundation
 open class PXCurrency: NSObject, Codable {
 
     open var id: String!
-    open var _description: String!
-    open var symbol: String!
-    open var decimalPlaces: Int!
-    open var decimalSeparator: String!
-    open var thousandSeparator: String!
+    open var _description: String?
+    open var symbol: String?
+    open var decimalPlaces: Int?
+    open var decimalSeparator: String?
+    open var thousandSeparator: String?
 
-    public init (id: String, description: String, symbol: String, decimalPlaces: Int, decimalSeparator: String, thousandSeparator: String) {
+    public init (id: String, description: String?, symbol: String?, decimalPlaces: Int?, decimalSeparator: String?, thousandSeparator: String?) {
         self.id = id
         self._description = description
         self.symbol = symbol
@@ -36,12 +36,12 @@ open class PXCurrency: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCurrencyKeys.self)
-        let description: String = try container.decode(String.self, forKey: .description)
+        let description: String? = try container.decodeIfPresent(String.self, forKey: .description)
         let id: String = try container.decode(String.self, forKey: .id)
-        let symbol: String = try container.decode(String.self, forKey: .symbol)
-        let decimalPlaces: Int = try container.decode(Int.self, forKey: .decimalPlaces)
-        let decimalSeparator: String = try container.decode(String.self, forKey: .decimalSeparator)
-        let thousandSeparator: String = try container.decode(String.self, forKey: .thousandSeparator)
+        let symbol: String? = try container.decodeIfPresent(String.self, forKey: .symbol)
+        let decimalPlaces: Int? = try container.decodeIfPresent(Int.self, forKey: .decimalPlaces)
+        let decimalSeparator: String? = try container.decodeIfPresent(String.self, forKey: .decimalSeparator)
+        let thousandSeparator: String? = try container.decodeIfPresent(String.self, forKey: .thousandSeparator)
 
         self.init(id: id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
     }

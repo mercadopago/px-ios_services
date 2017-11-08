@@ -8,10 +8,10 @@
 
 import Foundation
 open class PXCardNumber: NSObject, Codable {
-    open var length: Int!
-    open var validation: String!
+    open var length: Int?
+    open var validation: String?
 
-    init(length: Int, validation: String) {
+    init(length: Int?, validation: String?) {
         self.length = length
         self.validation = validation
     }

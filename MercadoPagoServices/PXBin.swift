@@ -10,10 +10,10 @@ import Foundation
 open class PXBin: NSObject, Codable {
 
     open var exclusionPattern: String?
-    open var installmentPattern: String!
-    open var pattern: String!
+    open var installmentPattern: String?
+    open var pattern: String?
 
-    init(exclusionPattern: String?, installmentPattern: String, pattern: String) {
+    init(exclusionPattern: String?, installmentPattern: String?, pattern: String?) {
         self.exclusionPattern = exclusionPattern
         self.installmentPattern = installmentPattern
         self.pattern = pattern
@@ -28,8 +28,8 @@ open class PXBin: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXBinKeys.self)
         let exclusionPattern: String? = try container.decodeIfPresent(String.self, forKey: .exclusionPattern)
-        let installmentPattern: String = try container.decode(String.self, forKey: .installmentPattern)
-        let pattern: String = try container.decode(String.self, forKey: .pattern)
+        let installmentPattern: String? = try container.decodeIfPresent(String.self, forKey: .installmentPattern)
+        let pattern: String? = try container.decodeIfPresent(String.self, forKey: .pattern)
 
         self.init(exclusionPattern: exclusionPattern, installmentPattern: installmentPattern, pattern: pattern)
     }

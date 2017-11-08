@@ -9,16 +9,16 @@
 import Foundation
 open class PXPayerCost: NSObject, Codable {
 
-    open var installmentRate: Double!
-    open var labels: [String]!
-    open var minAllowedAmount: Double!
-    open var maxAllowedAmount: Double!
-    open var recommendedMessage: String!
-    open var installmentAmount: Double!
-    open var totalAmount: Double!
-    open var installments: Int!
+    open var installmentRate: Double?
+    open var labels: [String]?
+    open var minAllowedAmount: Double?
+    open var maxAllowedAmount: Double?
+    open var recommendedMessage: String?
+    open var installmentAmount: Double?
+    open var totalAmount: Double?
+    open var installments: Int?
 
-    init(installmentRate: Double, labels: [String], minAllowedAmount: Double, maxAllowedAmount: Double, recommendedMessage: String, installmentAmount: Double, totalAmount: Double, installments: Int) {
+    init(installmentRate: Double?, labels: [String]?, minAllowedAmount: Double?, maxAllowedAmount: Double?, recommendedMessage: String?, installmentAmount: Double?, totalAmount: Double?, installments: Int?) {
         self.installmentRate = installmentRate
         self.labels = labels
         self.minAllowedAmount = minAllowedAmount
@@ -42,14 +42,14 @@ open class PXPayerCost: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPayerCostKeys.self)
-        let installmentRate: Double = try container.decode(Double.self, forKey: .installmentRate)
-        let labels: [String] = try container.decode([String].self, forKey: .labels)
-        let minAllowedAmount: Double = try container.decode(Double.self, forKey: .minAllowedAmount)
-        let maxAllowedAmount: Double = try container.decode(Double.self, forKey: .maxAllowedAmount)
-        let recommendedMessage: String = try container.decode(String.self, forKey: .recommendedMessage)
-        let installmentAmount: Double = try container.decode(Double.self, forKey: .installmentAmount)
-        let totalAmount: Double = try container.decode(Double.self, forKey: .totalAmount)
-        let installments: Int = try container.decode(Int.self, forKey: .installments)
+        let installmentRate: Double? = try container.decodeIfPresent(Double.self, forKey: .installmentRate)
+        let labels: [String]? = try container.decodeIfPresent([String].self, forKey: .labels)
+        let minAllowedAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .minAllowedAmount)
+        let maxAllowedAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .maxAllowedAmount)
+        let recommendedMessage: String? = try container.decodeIfPresent(String.self, forKey: .recommendedMessage)
+        let installmentAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .installmentAmount)
+        let totalAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .totalAmount)
+        let installments: Int? = try container.decodeIfPresent(Int.self, forKey: .installments)
 
         self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments)
     }
