@@ -66,14 +66,14 @@ open class PaymentMethodSearchService: MercadoPagoService {
         params.paramsAppend(key: ApiParams.EMAIL, value : customerEmail)
         params.paramsAppend(key: ApiParams.CUSTOMER_ID, value : customerId)
         params.paramsAppend(key: ApiParams.SITE_ID, value : site.id)
-        params.paramsAppend(key: ApiParams.API_VERSION, value : MercadoPagoService.API_VERSION)
+        params.paramsAppend(key: ApiParams.API_VERSION, value : PXServicesURLConfigs.API_VERSION)
         params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: processingMode)
 
         let groupsPayerBody = try! payer.toJSONString()
 
         let headers = ["Accept-Language": language]
 
-        self.request(uri: MercadoPagoService.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (data) -> Void in
+        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (data) -> Void in
              let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {

@@ -11,8 +11,8 @@ import UIKit
 open class PreferenceService: MercadoPagoService {
 
     internal func getPreference(publicKey: String, preferenceId: String, success : @escaping (PXCheckoutPreference) -> Void, failure : @escaping ((_ error: NSError) -> Void)) {
-        let params = "public_key=" + publicKey + "&api_version=" + MercadoPagoService.API_VERSION
-        self.request(uri: MercadoPagoService.MP_PREFERENCE_URI + preferenceId, params: params, body: nil, method: "GET", success: { (data: Data) in
+        let params = "public_key=" + publicKey + "&api_version=" + PXServicesURLConfigs.API_VERSION
+        self.request(uri: PXServicesURLConfigs.MP_PREFERENCE_URI + preferenceId, params: params, body: nil, method: "GET", success: { (data: Data) in
               let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             if let preferenceDic = jsonResult as? NSDictionary {
                 if preferenceDic["error"] != nil {

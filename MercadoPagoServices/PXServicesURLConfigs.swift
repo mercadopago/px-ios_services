@@ -1,16 +1,13 @@
 //
-//  MercadoPagoService.swift
-//  MercadoPagoServicesTests
+//  PXServicesURLConfigs.swift
+//  MercadoPagoServices
 //
-//  Created by Eden Torres on 11/2/17.
+//  Created by Eden Torres on 11/8/17.
 //  Copyright © 2017 Mercado Pago. All rights reserved.
 //
+
 import Foundation
-
-open class MercadoPagoService: NSObject {
-
-    let MP_DEFAULT_TIME_OUT = 15.0
-
+open class PXServicesURLConfigs: NSObject {
     open static var MP_TEST_ENV = "/beta"
     open static var MP_PROD_ENV = "/v1"
     open static var MP_SELECTED_ENV = MP_PROD_ENV
@@ -37,40 +34,4 @@ open class MercadoPagoService: NSObject {
     open static let MP_PREFERENCE_URI = MP_ENVIROMENT + "/preferences/"
     open static let MP_DISCOUNT_URI =  "/discount_campaigns/"
     open static let MP_CUSTOMER_URI = "/customers?preference_id="
-    open static let MP_PAYMENTS_URI = MP_ENVIROMENT + PAYMENTS
-
-    var baseURL: String!
-
-    init (baseURL: String) {
-        super.init()
-        self.baseURL = baseURL
-    }
-
-    override init () {
-        super.init()
-    }
-
-    public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
-                        failure: ((_ error: NSError) -> Void)?) {
-
-        var finalUri = uri
-        if !String.isNullOrEmpty(params) {
-            finalUri = finalUri + "?" + params!
-        }
-
-        if method == "POST" {
-
-            do {
-                let jsonResponse = try MockManager.getMockResponseFor(finalUri, method: method)
-
-                if jsonResponse != nil {
-                    success(jsonResponse)
-                } else {
-                    failure!(NSError(domain: uri, code: 400, userInfo: nil))
-                }
-            } catch {
-                failure!(NSError(domain: uri, code: 400, userInfo: nil))
-            }
-        }
-    }
 }

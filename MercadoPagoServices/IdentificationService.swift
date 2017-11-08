@@ -16,7 +16,7 @@ open class IdentificationService: MercadoPagoService {
         self.payerAccessToken = payerAccessToken
         super.init(baseURL: baseURL)
     }
-    open func getIdentificationTypes(_ method: String = "GET", uri: String = MercadoPagoService.MP_IDENTIFICATION_URI, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getIdentificationTypes(_ method: String = "GET", uri: String = PXServicesURLConfigs.MP_IDENTIFICATION_URI, success: @escaping (_ data: Data?) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
 

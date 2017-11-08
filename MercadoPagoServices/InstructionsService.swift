@@ -29,11 +29,11 @@ open class InstructionsService: MercadoPagoService {
 
         var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
         params.paramsAppend(key: ApiParams.PAYMENT_TYPE, value: paymentTypeId)
-        params.paramsAppend(key: ApiParams.API_VERSION, value : MercadoPagoService.API_VERSION)
+        params.paramsAppend(key: ApiParams.API_VERSION, value : PXServicesURLConfigs.API_VERSION)
 
         let headers = ["Accept-Language": language]
 
-        self.request(uri: MercadoPagoService.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (data: Data) -> Void in
+        self.request(uri: PXServicesURLConfigs.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (data: Data) -> Void in
 
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
 

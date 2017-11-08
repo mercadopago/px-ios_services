@@ -21,7 +21,7 @@ open class PaymentService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    open func getPaymentMethods(_ method: String = "GET", uri: String = MercadoPagoService.MP_PAYMENT_METHODS_URI, success: @escaping (_ data: Data) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getPaymentMethods(_ method: String = "GET", uri: String = PXServicesURLConfigs.MP_PAYMENT_METHODS_URI, success: @escaping (_ data: Data) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
         params.paramsAppend(key: ApiParams.PROCESSING_MODE, value: processingMode)
@@ -33,7 +33,7 @@ open class PaymentService: MercadoPagoService {
         })
     }
 
-    open func getInstallments(_ method: String = "GET", uri: String = MercadoPagoService.MP_INSTALLMENTS_URI, bin: String?, amount: Double, issuerId: String?, payment_method_id: String, success: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getInstallments(_ method: String = "GET", uri: String = PXServicesURLConfigs.MP_INSTALLMENTS_URI, bin: String?, amount: Double, issuerId: String?, payment_method_id: String, success: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
         params.paramsAppend(key: ApiParams.BIN, value: bin)
@@ -61,7 +61,7 @@ open class PaymentService: MercadoPagoService {
         })
     }
 
-    open func getIssuers(_ method: String = "GET", uri: String = MercadoPagoService.MP_ISSUERS_URI, payment_method_id: String, bin: String? = nil, success:  @escaping (_ data: Data) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getIssuers(_ method: String = "GET", uri: String = PXServicesURLConfigs.MP_ISSUERS_URI, payment_method_id: String, bin: String? = nil, success:  @escaping (_ data: Data) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         var params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
         params.paramsAppend(key: ApiParams.PAYMENT_METHOD_ID, value: payment_method_id)

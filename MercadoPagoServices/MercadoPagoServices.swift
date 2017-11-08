@@ -202,11 +202,13 @@ open class MercadoPagoServices: NSObject {
         discountService.getDiscount(publicKey: merchantPublicKey, amount: amount, code: couponCode, payerEmail: payerEmail, additionalInfo: addInfo, success: callback, failure: failure)
     }
 
-    //    public func getCampaigns(callback: @escaping ([Campaign]) -> Void, failure: ((_ error: NSError) -> Void)) {
-    //
-    //    }
+    public func getCampaigns(callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-    // TODO: Sacar esto
+            let discountService = DiscountService(baseURL: getMerchantDiscountBaseURL, URI: getMerchantDiscountURI)
+
+            discountService.getCampaigns(publicKey: merchantPublicKey, success: callback, failure: failure)
+        }
+
 
     open func getCustomer(callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: CustomService = CustomService(baseURL: getCustomerBaseURL, URI: getCustomerURI)
@@ -253,7 +255,7 @@ open class MercadoPagoServices: NSObject {
         }
     }
 
-    public func setDiscount(baseURL: String = MercadoPagoService.MP_API_BASE_URL, URI: String = MercadoPagoService.MP_DISCOUNT_URI, additionalInfo: [String:String]? = [:]) {
+    public func setDiscount(baseURL: String = PXServicesURLConfigs.MP_API_BASE_URL, URI: String = PXServicesURLConfigs.MP_DISCOUNT_URI, additionalInfo: [String:String]? = [:]) {
         getMerchantDiscountBaseURL = baseURL
         getMerchantDiscountURI = URI
         if let additionalInfo =  additionalInfo as NSDictionary? {
@@ -287,9 +289,4 @@ open class MercadoPagoServices: NSObject {
     open func setLanguage(language: String) {
         self.language = language
     }
-
-    open func enableBetaServices() {
-        MercadoPagoService.MP_SELECTED_ENV = MercadoPagoService.MP_TEST_ENV
-    }
-
 }
