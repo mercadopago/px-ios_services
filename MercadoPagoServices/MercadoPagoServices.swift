@@ -288,7 +288,7 @@ open class MercadoPagoServices: NSObject {
         self.language = language
     }
 
-    open func setBetaEnvironment() {
+    open func enableBetaServices() {
         MercadoPagoService.MP_SELECTED_ENV = MercadoPagoService.MP_TEST_ENV
     }
 
