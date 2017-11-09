@@ -13,31 +13,8 @@ open class PXApitUtil: NSObject {
     open static let BAD_REQUEST = 400
     open static let NOT_FOUND = 404
     open static let OK = 200
-
-    open class var ERROR_KEY_CODE: Int {
-        return -1
-    }
-
-    open class var ERROR_API_CODE: Int {
-        return -2
-    }
-
-    open class var ERROR_UNKNOWN_CODE: Int {
-        return -3
-    }
-
-    open class var ERROR_NOT_INSTALLMENTS_FOUND: Int {
-        return -4
-    }
-
-    open class var ERROR_PAYMENT: Int {
-        return -4
-    }
-
-    open class var ERROR_INSTRUCTIONS: Int {
-        return -4
-    }
 }
+
 internal class ApiParams: NSObject {
     static let PAYER_ACCESS_TOKEN = "access_token"
     static let PUBLIC_KEY = "public_key"

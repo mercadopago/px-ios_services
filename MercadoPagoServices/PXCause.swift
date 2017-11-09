@@ -23,7 +23,14 @@ open class PXCause: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCauseKeys.self)
-        let code: String? = try container.decodeIfPresent(String.self, forKey: .code)
+        var code = ""
+        do {
+            let codeInt = try container.decodeIfPresent(Int.self, forKey: .code)
+            code = (codeInt?.stringValue)!
+        } catch {
+            let stringId = try container.decodeIfPresent(String.self, forKey: .code)
+            code = stringId!
+        }
         let description: String? = try container.decodeIfPresent(String.self, forKey: .description)
 
         self.init(code: code, description: description)

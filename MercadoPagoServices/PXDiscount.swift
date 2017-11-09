@@ -44,7 +44,14 @@ open class PXDiscount: NSObject, Codable {
         let percentOff: Double? = try container.decodeIfPresent(Double.self, forKey: .percentOff)
         let amountOff: Double? = try container.decodeIfPresent(Double.self, forKey: .amountOff)
         let couponAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .couponAmount)
-        let id: String = try container.decode(String.self, forKey: .id)
+        var id = ""
+        do {
+            let intId = try container.decodeIfPresent(Int.self, forKey: .id)
+            id = (intId?.stringValue)!
+        } catch {
+            let stringId = try container.decodeIfPresent(String.self, forKey: .id)
+            id = stringId!
+        }
         let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
         let currencyId: String? = try container.decodeIfPresent(String.self, forKey: .currencyId)
         let couponCode: String? = try container.decodeIfPresent(String.self, forKey: .couponCode)

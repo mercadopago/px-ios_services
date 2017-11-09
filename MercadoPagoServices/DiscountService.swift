@@ -20,7 +20,7 @@ open class DiscountService: MercadoPagoService {
         self.baseURL = baseURL
     }
 
-    open func getDiscount(publicKey: String, amount: Double, code: String? = nil, payerEmail: String?, additionalInfo: String? = nil, success: @escaping (_ discount: PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getDiscount(publicKey: String, amount: Double, code: String? = nil, payerEmail: String?, additionalInfo: String? = nil, success: @escaping (_ discount: PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         var params = "public_key=" + publicKey + "&transaction_amount=" + String(amount)
 
         if !String.isNullOrEmpty(payerEmail) {
@@ -40,7 +40,8 @@ open class DiscountService: MercadoPagoService {
 
             if let discount = jsonResult as? NSDictionary {
                 if let error = discount["error"] {
-                    failure(NSError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: PXApitUtil.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: error]))
+                    let apiException = try! PXApiException.fromJSON(data: data)
+                    failure(PXError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: error], apiException: apiException))
                 } else {
                     let discount = try! PXDiscount.fromJSON(data: data)
                     success(discount)
@@ -48,11 +49,11 @@ open class DiscountService: MercadoPagoService {
             }
 
         }, failure: { (error) -> Void in
-            failure(NSError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+            failure(PXError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }
 
-    open func getCampaigns(publicKey: String , success: @escaping (_ discount: [PXCampaign]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getCampaigns(publicKey: String , success: @escaping (_ discount: [PXCampaign]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
          var params = "public_key=" + publicKey
 
         self.request(uri: self.URI, params: params, body: nil, method: "GET", cache: false, success: { (data) -> Void in
@@ -60,7 +61,8 @@ open class DiscountService: MercadoPagoService {
 
             if let discount = jsonResult as? NSDictionary {
                 if let error = discount["error"] {
-                    failure(NSError(domain: "mercadopago.sdk.DiscountService.getCampaigns", code: PXApitUtil.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: error]))
+                    let apiException = try! PXApiException.fromJSON(data: data)
+                    failure(PXError(domain: "mercadopago.sdk.DiscountService.getCampaigns", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: error], apiException: apiException))
                 } else {
                     let campaign: [PXCampaign] = try! PXCampaign.fromJSON(data: data)
                     success(campaign)
@@ -68,7 +70,7 @@ open class DiscountService: MercadoPagoService {
             }
 
         }, failure: { (error) -> Void in
-            failure(NSError(domain: "mercadopago.sdk.DiscountService.getCampaigns", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+            failure(PXError(domain: "mercadopago.sdk.DiscountService.getCampaigns", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }
 }
