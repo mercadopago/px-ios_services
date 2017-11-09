@@ -91,8 +91,8 @@ open class MercadoPagoServices: NSObject {
         createToken(cardTokenJSON: try! savedCardToken.toJSONString()!, callback: callback, failure: failure)
     }
 
-    open func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: GatewayService = GatewayService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
+    open func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         service.getToken(cardTokenJSON: cardTokenJSON, success: {(data: Data) -> Void in
 
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
@@ -110,8 +110,8 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    open func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: GatewayService = GatewayService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
+    open func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         service.cloneToken(public_key: merchantPublicKey, tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments)
             var token : PXToken
@@ -256,7 +256,10 @@ open class MercadoPagoServices: NSObject {
     }
 
     public func getGatewayURL() -> String {
-        return gatewayBaseURL ?? baseURL
+        if !String.isNullOrEmpty(gatewayBaseURL) {
+            return gatewayBaseURL
+        }
+        return baseURL
     }
 
     public func setGetCustomer(baseURL: String, URI: String, additionalInfo: [String:String]? = [:]) {
