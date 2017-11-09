@@ -28,16 +28,20 @@ open class PXPaymentPreference: NSObject, Codable {
     init(maxAcceptedInstallments: Int?, defaultInstallments: Int?, excludedPaymentMethods: [PXPaymentMethod]?, excludedPaymentTypes: [PXPaymentType]?, defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
 
         var excludedPaymentTypeIds: [String] = []
-        for paymentType in excludedPaymentTypes {
-            if String.isNullOrEmpty(paymentType.id) {
-                excludedPaymentTypeIds.append(paymentType.id)
+        if let excludedPaymentTypes = excludedPaymentTypes {
+            for paymentType in excludedPaymentTypes {
+                if String.isNullOrEmpty(paymentType.id) {
+                    excludedPaymentTypeIds.append(paymentType.id)
+                }
             }
         }
 
         var excludedPaymentMethodIds: [String] = []
-        for paymentMethod in excludedPaymentMethods {
-            if String.isNullOrEmpty(paymentMethod.id) {
-                excludedPaymentMethodIds.append(paymentMethod.id)
+        if let excludedPaymentMethods = excludedPaymentMethods {
+            for paymentMethod in excludedPaymentMethods {
+                if String.isNullOrEmpty(paymentMethod.id) {
+                    excludedPaymentMethodIds.append(paymentMethod.id)
+                }
             }
         }
 

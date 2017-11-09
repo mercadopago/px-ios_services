@@ -60,7 +60,7 @@ open class CustomService: MercadoPagoService {
                     if paymentDic.allKeys.count > 0 {
                         let payment = try! PXPayment.fromJSON(data: data)
                         if !payment.isCardPaymentType() {
-                            MPXTracker.trackPaymentOff(paymentId: payment.id)
+                            MPXTracker.trackPaymentOff(paymentId: payment.id.stringValue)
                         }
                         success(payment)
                     } else {

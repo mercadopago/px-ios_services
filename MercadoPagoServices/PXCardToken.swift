@@ -75,7 +75,7 @@ extension PXCardToken {
             }
 
             // Validate card length
-            let filteredSettings = settings?.filter({return $0.cardNumber.length == cardNumber!.trimSpaces().characters.count})
+            let filteredSettings = cardSettings.filter({return $0.cardNumber?.length == cardNumber!.trimSpaces().characters.count})
 
             if Array.isNullOrEmpty(filteredSettings) {
                 if userInfo == nil {
@@ -88,7 +88,7 @@ extension PXCardToken {
                 }
             }
             // Validate luhn
-            if "standard" == cardSettings[0].cardNumber.validation && !checkLuhn(cardNumber: (cardNumber?.trimSpaces())!) {
+            if "standard" == cardSettings[0].cardNumber?.validation && !checkLuhn(cardNumber: (cardNumber?.trimSpaces())!) {
                 if userInfo == nil {
                     userInfo = [String: String]()
                 }
@@ -128,7 +128,7 @@ extension PXCardToken {
             return false
         }
 
-        if hasMonthPassed(self.expirationYear, month: self.expirationMonth) {
+        if hasDatePassed(year: self.expirationYear, month: self.expirationMonth) {
             return false
         }
 
@@ -188,11 +188,12 @@ extension PXCardToken {
     internal func validateSecurityCodeWithPaymentMethod(_ securityCode: String, paymentMethod: PXPaymentMethod, bin: String) -> Bool {
         let setting: [PXSetting]? = PXSetting.getSettingByBin(paymentMethod.settings, bin: getBin())
         if let settings = setting {
-            let cvvLength = settings[0].securityCode.length
-            if (cvvLength != 0) && (securityCode.characters.count != cvvLength) {
-                return false
-            } else {
-                return true
+            if let securityCodeLenght = settings[0].securityCode?.length {
+                if (securityCodeLenght != 0) && (securityCode.characters.count != securityCodeLenght) {
+                    return false
+                } else {
+                    return true
+                }
             }
         }
         return true
@@ -219,8 +220,15 @@ extension PXCardToken {
         return normalized < now.year!
     }
 
-    internal func hasMonthPassed(_ year: Int, month: Int) -> Bool {
-        return hasYearPassed(year) || normalizeYear(year) == now.year! && month < (now.month!)
+    internal func hasMonthPassed(_ month: Int) -> Bool {
+        return month < (now.month!)
+    }
+    
+    internal func hasDatePassed(year: Int?, month: Int?) -> Bool {
+        guard let year = year, let month = month else {
+            return true
+        }
+        return hasYearPassed(year) || normalizeYear(year) == now.year! && hasMonthPassed(month)
     }
 
     internal func normalizeYear(_ year: Int) -> Int {
