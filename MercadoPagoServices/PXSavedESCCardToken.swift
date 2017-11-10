@@ -25,7 +25,7 @@ open class PXSavedESCCardToken: PXSavedCardToken {
         try container.encodeIfPresent(self.securityCode, forKey: .securityCode)
         try container.encodeIfPresent(self.device, forKey: .device)
         try container.encodeIfPresent(self.requireEsc, forKey: .requireEsc)
-        try container.encodeIfPresent(self.esc, forKey: .esc)
+        try container.encode(self.esc, forKey: .esc)
     }
 
     open override func toJSONString() throws -> String? {
