@@ -14,7 +14,7 @@ pod 'MercadoPagoServices', '1.0.0'
 Then the first step is to create an instance of **_MercadoPagoServices_** class:
 
 ``` swift
-  let mercadoPagoServices = MercadoPagoServices(merchantPublicKey: "publicKey")
+let mercadoPagoServices = MercadoPagoServices(merchantPublicKey: "publicKey")
 ```
 
 ## Charging cards
@@ -28,11 +28,11 @@ You need to find out your customer’s credit card type and brand to correctly v
 Display available payment methods with the getPaymentMethods function of the **_MercadoPagoServices_** class:
 
 ``` swift
-      mercadoPagoServices.getPaymentMethods(callback: { (pxPaymentMethods) in
-          //Show paymentMethods for selection
-      }) { (error) in
-          //TODO: Manage API Failure
-      }
+  mercadoPagoServices.getPaymentMethods(callback: { (pxPaymentMethods) in
+      //Show paymentMethods for selection
+  }) { (error) in
+      //TODO: Manage API Failure
+  }
 ```
 
 ### Collecting credit card information
@@ -48,11 +48,11 @@ Create a form for you customer to enter his credit card information, for example
 Depending on the country from which you are requesting the payment, you have to ask your customer for his identification type and number. To do this, you can consult the **_getIdentificationTypes_** method from the **_MercadoPagoServices_** class which, provided with your _public key_ returns valid identification types from the country in question.
 
 ``` swift
-      mercadoPagoServices.getIdentificationTypes(callback: { (pxIdentificationTypes) in
-          // Done, show the identification types to your users.
-      }) { (error) in
-          //TODO: Manage API Failure
-      }
+  mercadoPagoServices.getIdentificationTypes(callback: { (pxIdentificationTypes) in
+      // Done, show the identification types to your users.
+  }) { (error) in
+      //TODO: Manage API Failure
+  }
 ```
 
 ### Validate the information
@@ -64,40 +64,40 @@ In the case of the credit card number and the security code, additional validati
 ##### Example:
 
 ``` swift
-  private func validateCardToken(cardToken: PXCardToken , paymentMethod: PXPaymentMethod) -> Bool {
+private func validateCardToken(cardToken: PXCardToken , paymentMethod: PXPaymentMethod) -> Bool {
 
-      /* Set errors within this function
-       *  Request focus on the first wrong filled field recommended */
+    /* Set errors within this function
+     *  Request focus on the first wrong filled field recommended */
 
-      var result = true;
+    var result = true;
 
-      /* Validate card number and security code
-       *  according the payment method’s particularities */
+    /* Validate card number and security code
+     *  according the payment method’s particularities */
 
-      if  !cardToken.validateCardNumber(paymentMethod){
-          result = false
-      }
+    if  !cardToken.validateCardNumber(paymentMethod){
+        result = false
+    }
 
-      if !cardToken.validateSecurityCode(paymentMethod){
-          result = false
-      }
+    if !cardToken.validateSecurityCode(paymentMethod){
+        result = false
+    }
 
-      if !cardToken.validateExpiryDate(12, year: 23) {
-          result = false
-      }
+    if !cardToken.validateExpiryDate(12, year: 23) {
+        result = false
+    }
 
-      if !cardToken.validateCardholderName() {
-          result = false
-      }
+    if !cardToken.validateCardholderName() {
+        result = false
+    }
 
-      /* If an identification type was selected,
-       *  validate it’s configurations */
-      if getIdentificationType() != nil &&
-          !cardToken.validateIdentificationNumber(getIdentificationType()) {
-          result = false
-      }
-      return result
-  }
+    /* If an identification type was selected,
+     *  validate it’s configurations */
+    if getIdentificationType() != nil &&
+        !cardToken.validateIdentificationNumber(getIdentificationType()) {
+        result = false
+    }
+    return result
+}
 ```
 
 ### Create a single use token
@@ -105,11 +105,11 @@ In the case of the credit card number and the security code, additional validati
 The following code shows you how you can exchange the credit card details for a secure token, directly from MercadoPago.
 
 ```swift
-      mercadoPagoServices.createToken(pxCardToken, callback: { (pxToken) in
-       //DONE! 
-      }) { (error) in
-          //TODO: Manage API Failure
-      }
+  mercadoPagoServices.createToken(pxCardToken, callback: { (pxToken) in
+   //DONE! 
+  }) { (error) in
+      //TODO: Manage API Failure
+  }
 ```
 
 **Done!** Now you can create a payment in your servers!
@@ -117,11 +117,11 @@ The following code shows you how you can exchange the credit card details for a 
 Along with the token you have just created, you will also need to send the payment method, number of installments and bank selected by the user. You will also need to identify the item or service that is being purchased and the customer who is using your application.
 
 ```swift
-      mercadoPagoServices.createPayment(YOUR_BASE_URL, YOUR_PAYMENTS_URI, body, queryParams, callback: {(pxPayment) in
-      //DONE!
-      }) { (error) in
-        //TODO: Manage API Failure
-      }
+  mercadoPagoServices.createPayment(YOUR_BASE_URL, YOUR_PAYMENTS_URI, body, queryParams, callback: {(pxPayment) in
+  //DONE!
+  }) { (error) in
+    //TODO: Manage API Failure
+  }
 ```
 
 The BODY of the request must contain:
@@ -147,12 +147,12 @@ Using the **_MercadoPagoServices_** class, you can get available installment pla
 We will see later on that when the bin is not enough to identify the card’s issuing bank, we need to indicate it explicitly to get appropriate costs.
 
 ```swift
-      mercadoPagoServices.getInstallments(bin, amount, issuerId, paymentMethodId, callback: {(pxInstallments) in
-        let payerCosts = pxInstallments[0].payerCosts
-        // Show payerCosts list for selection
-      }) { (error) in
-        //TODO: Manage API Failure
-      }
+  mercadoPagoServices.getInstallments(bin, amount, issuerId, paymentMethodId, callback: {(pxInstallments) in
+    let payerCosts = pxInstallments[0].payerCosts
+    // Show payerCosts list for selection
+  }) { (error) in
+    //TODO: Manage API Failure
+  }
 ```
 
 ### Let the user select a bank, if needed
@@ -162,11 +162,11 @@ In some cases, MercadoPago needs to know the card’s issuing bank to find promo
 To know if you need to request this information from the user, you can use the _isIssuerRequired()_ method from the **_PaymentMethod_** class.
 
 ```swift
-      mercadoPagoServices.getIssuers(paymentMethodId, bin, callback: { (pxIssuers) in
-        //Show issuers for selection
-      }) { (error) in
-        //TODO: Manage API Failure
-      }
+  mercadoPagoServices.getIssuers(paymentMethodId, bin, callback: { (pxIssuers) in
+    //Show issuers for selection
+  }) { (error) in
+    //TODO: Manage API Failure
+  }
 ```
 
 Create the payment with the issuer data.
