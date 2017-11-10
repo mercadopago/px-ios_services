@@ -2,17 +2,16 @@
 
 This library makes it easy to consume Mercado Pago API from your application. By creating tokens, Mercado Pago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server. 
 
-##Installation
+## Installation
 Simply add the following line to your Podfile:
 
 ```ruby
 use_frameworks!
 platform :ios, '8.0'
-
 pod 'MercadoPagoServices', '1.0.0'
 ```
 
-The first step is to create an instance of **_MercadoPagoServices_** class:
+Then the first step is to create an instance of **_MercadoPagoServices_** class:
 
 ``` swift
   let mercadoPagoServices = MercadoPagoServices(merchantPublicKey: "publicKey")
