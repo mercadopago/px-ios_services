@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
-  s.dependency 'MercadoPagoPXTracking', '1.1.0'
+  s.dependency 'MercadoPagoPXTracking', '2.0.0'
 
 
   s.source_files = ['MercadoPagoServices/*']

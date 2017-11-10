@@ -91,7 +91,7 @@ open class MercadoPagoServices: NSObject {
         createToken(cardTokenJSON: try! savedCardToken.toJSONString()!, callback: callback, failure: failure)
     }
 
-    open func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         service.getToken(cardTokenJSON: cardTokenJSON, success: {(data: Data) -> Void in
 

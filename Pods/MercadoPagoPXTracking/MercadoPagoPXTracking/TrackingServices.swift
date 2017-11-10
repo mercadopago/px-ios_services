@@ -12,13 +12,6 @@ class TrackingServices: NSObject {
 
     static let STATUS_OK = 200
 
-    static let MP_API_BASE_URL_PROD: String =  "https://api.mercadopago.com"
-    open static var MP_TEST_ENV = "/beta"
-    open static var MP_PROD_ENV = "/v1"
-    open static var MP_SELECTED_ENV = MP_PROD_ENV
-    static var MP_ENVIROMENT = MP_SELECTED_ENV  + "/checkout"
-    static let MP_TRACKING_EVENTS_URI =  MP_ENVIROMENT + "/tracking/events"
-
     static func request(url: String, params: String?, body: String? = nil, method: String, headers: [String:String]? = nil, success: @escaping (Any) -> Void,
                         failure: ((NSError) -> Void)?) {
         var requesturl = url

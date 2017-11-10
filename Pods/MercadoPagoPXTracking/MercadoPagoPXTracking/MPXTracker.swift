@@ -21,7 +21,7 @@ public class MPXTracker: NSObject {
     var public_key: String = ""
     var sdkVersion = ""
 
-    static let TRACKING_URL = TrackingServices.MP_API_BASE_URL_PROD + TrackingServices.MP_TRACKING_EVENTS_URI
+    static let TRACKING_URL = PXTrackingURLConfigs.MP_API_BASE_URL_PROD + PXTrackingURLConfigs.MP_TRACKING_EVENTS_URI
 
     static let kTrackingSettings = "tracking_settings"
     private static let kTrackingEnabled = "tracking_enabled"
