@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServices
 
 open class DiscountService: MercadoPagoService {
 
