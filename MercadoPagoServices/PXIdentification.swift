@@ -10,8 +10,8 @@ import Foundation
 
 open class PXIdentification: NSObject, Codable {
 
-    open var number: String?
-    open var type: String?
+    open var number: String? = "null"
+    open var type: String? = "null"
 
     public init(number: String?, type: String?) {
         self.type = type
