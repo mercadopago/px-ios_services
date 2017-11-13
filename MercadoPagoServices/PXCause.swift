@@ -11,7 +11,7 @@ open class PXCause: NSObject, Codable {
     open var code: String?
     open var _description: String?
 
-    init(code: String?, description: String?) {
+    public init(code: String?, description: String?) {
         self.code = code
         self._description = description
     }
