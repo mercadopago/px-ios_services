@@ -14,7 +14,7 @@ open class PXPaymentMethodSearch: NSObject, Codable {
     open var cards: [PXCard]?
     open var defaultOption: PXPaymentMethodSearchItem?
 
-    init(paymentMethodSearchItem: [PXPaymentMethodSearchItem]?, customOptionSearchItems: [PXCustomOptionSearchItem]?, paymentMethods: [PXPaymentMethod]?, cards: [PXCard]?, defaultOption: PXPaymentMethodSearchItem?) {
+    public init(paymentMethodSearchItem: [PXPaymentMethodSearchItem]?, customOptionSearchItems: [PXCustomOptionSearchItem]?, paymentMethods: [PXPaymentMethod]?, cards: [PXCard]?, defaultOption: PXPaymentMethodSearchItem?) {
         self.paymentMethodSearchItem = paymentMethodSearchItem
         self.customOptionSearchItems = customOptionSearchItems
         self.paymentMethods = paymentMethods

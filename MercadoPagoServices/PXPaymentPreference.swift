@@ -16,7 +16,7 @@ open class PXPaymentPreference: NSObject, Codable {
     open var defaultPaymentMethodId: String?
     open var defaultPaymentTypeId: String?
 
-    init(maxAcceptedInstallments: Int?, defaultInstallments: Int?, excludedPaymentMethodIds: [String]?, excludedPaymentTypeIds: [String]?, defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
+    public init(maxAcceptedInstallments: Int?, defaultInstallments: Int?, excludedPaymentMethodIds: [String]?, excludedPaymentTypeIds: [String]?, defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
         self.maxAcceptedInstallments = maxAcceptedInstallments
         self.defaultInstallments = defaultInstallments
         self.excludedPaymentMethodIds = excludedPaymentMethodIds

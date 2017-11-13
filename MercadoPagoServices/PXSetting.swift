@@ -13,7 +13,7 @@ open class PXSetting: NSObject, Codable {
     open var cardNumber: PXCardNumber?
     open var securityCode: PXSecurityCode?
 
-    init(bin: PXBin?, cardNumber: PXCardNumber?, securityCode: PXSecurityCode?) {
+    public init(bin: PXBin?, cardNumber: PXCardNumber?, securityCode: PXSecurityCode?) {
         self.bin = bin
         self.cardNumber = cardNumber
         self.securityCode = securityCode

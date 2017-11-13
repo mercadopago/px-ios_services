@@ -17,7 +17,7 @@ open class PXCheckoutPreference: NSObject, Codable {
     open var expirationDateFrom: Date?
     open var site: PXSite?
 
-    init(id: String, items: [PXItem]?, payer: PXPayer?, paymentPreference: PXPaymentPreference?, siteId: String?, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?) {
+    public init(id: String, items: [PXItem]?, payer: PXPayer?, paymentPreference: PXPaymentPreference?, siteId: String?, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?) {
         self.id = id
         self.items = items
         self.payer = payer

@@ -16,7 +16,7 @@ open class PXTransactionDetails: NSObject, Codable {
     open var totalPaidAmount: Double?
     open var paymentMethodReferenceId: String?
 
-    init(externalResourceUrl: String?, financialInstitution: String?, installmentAmount: Double?, netReivedAmount: Double?, overpaidAmount: Double?, totalPaidAmount: Double?, paymentMethodReferenceId: String?) {
+    public init(externalResourceUrl: String?, financialInstitution: String?, installmentAmount: Double?, netReivedAmount: Double?, overpaidAmount: Double?, totalPaidAmount: Double?, paymentMethodReferenceId: String?) {
         self.externalResourceUrl = externalResourceUrl
         self.financialInstitution = financialInstitution
         self.installmentAmount = installmentAmount

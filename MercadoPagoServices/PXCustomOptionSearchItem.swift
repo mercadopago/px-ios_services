@@ -13,7 +13,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     open var paymentMethodId: String?
     open var paymentTypeId: String?
 
-    init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?) {
+    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?) {
         self.id = id
         self._description = description
         self.paymentMethodId = paymentMethodId

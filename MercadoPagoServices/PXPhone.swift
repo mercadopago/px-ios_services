@@ -12,7 +12,7 @@ open class PXPhone: NSObject, Codable {
     open var areaCode: String?
     open var number: String?
 
-    init(areaCode: String?, number: String?) {
+    public init(areaCode: String?, number: String?) {
         self.areaCode = areaCode
         self.number = number
     }

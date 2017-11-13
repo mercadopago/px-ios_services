@@ -13,7 +13,7 @@ open class PXAddress: NSObject, Codable {
     open var streetNumber: Int64?
     open var zipCode: String?
 
-    init(streetName: String?, streetNumber: Int64?, zipCode: String?) {
+    public init(streetName: String?, streetNumber: Int64?, zipCode: String?) {
         self.streetName = streetName
         self.streetNumber = streetNumber
         self.zipCode = zipCode

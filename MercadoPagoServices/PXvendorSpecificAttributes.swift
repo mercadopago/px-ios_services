@@ -17,7 +17,7 @@ open class PXvendorSpecificAttributes: NSObject, Codable {
     open var deviceName: String?
     open var simulator = 0
 
-    override init() {
+    public override init() {
         let device: UIDevice = UIDevice.current
 
         if device.userInterfaceIdiom == UIUserInterfaceIdiom.pad {

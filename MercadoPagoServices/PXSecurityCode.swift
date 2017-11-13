@@ -13,7 +13,7 @@ open class PXSecurityCode: NSObject, Codable {
     open var mode: String?
     open var length: Int?
 
-    init(cardLocation: String?, mode: String?, length: Int?) {
+    public init(cardLocation: String?, mode: String?, length: Int?) {
         self.cardLocation = cardLocation
         self.mode = mode
         self.length = length

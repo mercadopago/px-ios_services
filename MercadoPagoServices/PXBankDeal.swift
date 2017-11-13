@@ -21,7 +21,7 @@ open class PXBankDeal: NSObject, Codable {
     open var recommendedMessage: String?
     open var totalFinancialCost: Double?
 
-    init(id: String, dateExpired: Date?, dateStarted: Date?, installments: [Int]?, issuer: PXIssuer?, legals: String?, picture: PXPicture?, maxInstallments: Int?, paymentMethods: [PXPaymentMethod]?, recommendedMessage: String?, totalFinancialCost: Double?) {
+    public init(id: String, dateExpired: Date?, dateStarted: Date?, installments: [Int]?, issuer: PXIssuer?, legals: String?, picture: PXPicture?, maxInstallments: Int?, paymentMethods: [PXPaymentMethod]?, recommendedMessage: String?, totalFinancialCost: Double?) {
         self.id = id
         self.dateExpired = dateExpired
         self.dateStarted = dateStarted

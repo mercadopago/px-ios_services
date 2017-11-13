@@ -11,7 +11,7 @@ open class PXInstructions: NSObject, Codable {
     open var amountInfo: PXAmountInfo?
     open var instructions: [PXInstruction]?
 
-    init(amountInfo: PXAmountInfo?, instructions: [PXInstruction]?) {
+    public init(amountInfo: PXAmountInfo?, instructions: [PXInstruction]?) {
         self.amountInfo = amountInfo
         self.instructions = instructions
     }

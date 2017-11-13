@@ -26,7 +26,7 @@ open class PXToken: NSObject, Codable {
     open var cardholder: PXCardHolder?
     open var esc: String?
 
-    init(id: String, publicKey: String?, cardId: String?, luhnValidation: Bool?, status: String?, usedDate: Date?, cardNumberLength: Int?, dateCreated: Date?, securityCodeLength: Int?, expirationMonth: Int?, expirationYear: Int?, dateLastUpdated: Date?, dueDate: Date?, firstSixDigits: String?, lastFourDigits: String?, cardholder: PXCardHolder?, esc: String?) {
+    public init(id: String, publicKey: String?, cardId: String?, luhnValidation: Bool?, status: String?, usedDate: Date?, cardNumberLength: Int?, dateCreated: Date?, securityCodeLength: Int?, expirationMonth: Int?, expirationYear: Int?, dateLastUpdated: Date?, dueDate: Date?, firstSixDigits: String?, lastFourDigits: String?, cardholder: PXCardHolder?, esc: String?) {
 
         self.id = id
         self.publicKey = publicKey

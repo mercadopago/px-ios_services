@@ -13,7 +13,7 @@ open class PXBin: NSObject, Codable {
     open var installmentPattern: String?
     open var pattern: String?
 
-    init(exclusionPattern: String?, installmentPattern: String?, pattern: String?) {
+    public init(exclusionPattern: String?, installmentPattern: String?, pattern: String?) {
         self.exclusionPattern = exclusionPattern
         self.installmentPattern = installmentPattern
         self.pattern = pattern

@@ -18,7 +18,7 @@ open class PXPayerCost: NSObject, Codable {
     open var totalAmount: Double?
     open var installments: Int?
 
-    init(installmentRate: Double?, labels: [String]?, minAllowedAmount: Double?, maxAllowedAmount: Double?, recommendedMessage: String?, installmentAmount: Double?, totalAmount: Double?, installments: Int?) {
+    public init(installmentRate: Double?, labels: [String]?, minAllowedAmount: Double?, maxAllowedAmount: Double?, recommendedMessage: String?, installmentAmount: Double?, totalAmount: Double?, installments: Int?) {
         self.installmentRate = installmentRate
         self.labels = labels
         self.minAllowedAmount = minAllowedAmount

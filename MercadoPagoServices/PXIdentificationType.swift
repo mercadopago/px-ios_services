@@ -14,7 +14,7 @@ open class PXIdentificationType: NSObject, Codable {
     open var maxLength: Int?
     open var type: String?
 
-    init(id: String, name: String?, minLength: Int?, maxLength: Int?, type: String?) {
+    public init(id: String, name: String?, minLength: Int?, maxLength: Int?, type: String?) {
         self.id = id
         self.name = name
         self.minLength = minLength

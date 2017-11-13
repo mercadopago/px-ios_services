@@ -19,7 +19,7 @@ open class PXInstruction: NSObject, Codable {
     open var tertiaryInfo: [String]?
     open var info: [String]?
 
-    init(title: String?, subtitle: String?, accreditationMessage: String?, accreditationComments: [String]?, action: [PXInstructionAction]?, type: String?, references: [PXInstructionReference]?, secondaryInfo: [String]?, tertiaryInfo: [String]?, info: [String]?) {
+    public init(title: String?, subtitle: String?, accreditationMessage: String?, accreditationComments: [String]?, action: [PXInstructionAction]?, type: String?, references: [PXInstructionReference]?, secondaryInfo: [String]?, tertiaryInfo: [String]?, info: [String]?) {
         self.title = title
         self.subtitle = subtitle
         self.accreditationMessage = accreditationMessage

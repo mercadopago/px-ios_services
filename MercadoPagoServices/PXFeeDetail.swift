@@ -12,7 +12,7 @@ open class PXFeeDetail: NSObject, Codable {
     open var feePayer: String?
     open var type: String?
 
-    init(amount: Double?, feePayer: String?, type: String?) {
+    public init(amount: Double?, feePayer: String?, type: String?) {
         self.amount = amount
         self.feePayer = feePayer
         self.type = type

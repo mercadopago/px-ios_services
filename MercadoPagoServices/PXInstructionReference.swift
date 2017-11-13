@@ -14,7 +14,7 @@ open class PXInstructionReference: NSObject, Codable {
     open var separator: String?
     open var comment: String?
 
-    init(label: String?, fieldValue: [String]?, separator: String?, comment: String?) {
+    public init(label: String?, fieldValue: [String]?, separator: String?, comment: String?) {
         self.label = label
         self.fieldValue = fieldValue
         self.separator = separator

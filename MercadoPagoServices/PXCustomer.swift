@@ -24,7 +24,7 @@ open class PXCustomer: NSObject, Codable {
     open var phone: PXPhone?
     open var registrationDate: Date?
 
-    init(address: PXAddress?, cards: [PXCard]?, defaultCard: String?, description: String?, dateCreated: Date?, dateLastUpdated: Date?, email: String?, firstName: String?, id: String, identification: PXIdentification?, lastName: String?, liveMode: Bool?, metadata: [String : String]?, phone: PXPhone?, registrationDate: Date?) {
+    public init(address: PXAddress?, cards: [PXCard]?, defaultCard: String?, description: String?, dateCreated: Date?, dateLastUpdated: Date?, email: String?, firstName: String?, id: String, identification: PXIdentification?, lastName: String?, liveMode: Bool?, metadata: [String : String]?, phone: PXPhone?, registrationDate: Date?) {
 
         self.address = address
         self.cards = cards

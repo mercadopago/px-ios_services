@@ -17,7 +17,7 @@ open class PXDiscount: NSObject, Codable {
     open var couponCode: String?
     open var concept: String?
 
-    init(id: String, name: String?, percentOff: Double?, amountOff: Double?, couponAmount: Double?, currencyId: String?, couponCode: String?, concept: String?) {
+    public init(id: String, name: String?, percentOff: Double?, amountOff: Double?, couponAmount: Double?, currencyId: String?, couponCode: String?, concept: String?) {
         self.id = id
         self.name = name
         self.percentOff = percentOff

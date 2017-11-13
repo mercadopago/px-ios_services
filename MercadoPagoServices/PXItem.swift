@@ -18,7 +18,7 @@ open class PXItem: NSObject, Codable {
     open var title: String?
     open var unitPrice: Double?
 
-    init(categoryId: String?, currencyId: String?, description: String?, id: String, pictureUrl: String?, quantity: Int?, title: String?, unitPrice: Double?) {
+    public init(categoryId: String?, currencyId: String?, description: String?, id: String, pictureUrl: String?, quantity: Int?, title: String?, unitPrice: Double?) {
         self.categoryId = categoryId
         self.currencyId = currencyId
         self._description = description

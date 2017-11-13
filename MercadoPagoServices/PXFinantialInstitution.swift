@@ -11,7 +11,7 @@ open class PXFinancialInstitution: NSObject, Codable {
     open var id: String!
     open var _description: String?
 
-    init(id: String, description: String?) {
+    public init(id: String, description: String?) {
         self.id = id
         self._description = description
     }
