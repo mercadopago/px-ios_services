@@ -30,7 +30,7 @@ open class PXPaymentPreference: NSObject, Codable {
         var excludedPaymentTypeIds: [String] = []
         if let excludedPaymentTypes = excludedPaymentTypes {
             for paymentType in excludedPaymentTypes {
-                if String.isNullOrEmpty(paymentType.id) {
+                if !String.isNullOrEmpty(paymentType.id) {
                     excludedPaymentTypeIds.append(paymentType.id)
                 }
             }
@@ -39,7 +39,7 @@ open class PXPaymentPreference: NSObject, Codable {
         var excludedPaymentMethodIds: [String] = []
         if let excludedPaymentMethods = excludedPaymentMethods {
             for paymentMethod in excludedPaymentMethods {
-                if String.isNullOrEmpty(paymentMethod.id) {
+                if !String.isNullOrEmpty(paymentMethod.id) {
                     excludedPaymentMethodIds.append(paymentMethod.id)
                 }
             }
