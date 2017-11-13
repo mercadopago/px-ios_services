@@ -17,8 +17,7 @@ open class CustomService: MercadoPagoService {
 
     init (baseURL: String, URI: String) {
         self.URI = URI
-        super.init()
-        self.baseURL = baseURL
+        super.init(baseURL: baseURL)
     }
 
     open func getCustomer(_ method: String = "GET", params: String, success: @escaping (_ jsonResult: PXCustomer) -> Void, failure: ((_ error: PXError) -> Void)?) {

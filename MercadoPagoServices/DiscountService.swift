@@ -15,8 +15,7 @@ open class DiscountService: MercadoPagoService {
 
     init (baseURL: String, URI: String) {
         self.URI = URI
-        super.init()
-        self.baseURL = baseURL
+        super.init(baseURL: baseURL)
     }
 
     open func getDiscount(publicKey: String, amount: Double, code: String? = nil, payerEmail: String?, additionalInfo: String? = nil, success: @escaping (_ discount: PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {

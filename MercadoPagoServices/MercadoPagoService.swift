@@ -17,9 +17,6 @@ open class MercadoPagoService: NSObject {
         super.init()
         self.baseURL = baseURL
     }
-    override init () {
-        super.init()
-    }
 
     public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
                         failure: ((_ error: NSError) -> Void)?) {
