@@ -12,10 +12,6 @@ extension String {
 
     static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
 
-    static public func isNullOrEmpty(_ value: String?) -> Bool {
-        return value == nil || value!.isEmpty
-    }
-
     public func startsWith(_ prefix: String) -> Bool {
         if prefix == self {
             return true
