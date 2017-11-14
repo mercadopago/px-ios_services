@@ -190,14 +190,17 @@ open class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    open func getDirectDiscount(url: String = PXServicesURLConfigs.MP_API_BASE_URL, uri: String = PXServicesURLConfigs.MP_DISCOUNT_URI, amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    open func getDirectDiscount(url: String = PXServicesURLConfigs.MP_API_BASE_URL, uri: String = PXServicesURLConfigs.MP_DISCOUNT_URI, amount: Double, payerEmail: String, discountAdditionalInfo: [String:String]?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         getCodeDiscount(url: url, uri: uri, amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
     }
 
-    open func getCodeDiscount(url: String = PXServicesURLConfigs.MP_API_BASE_URL, uri: String = PXServicesURLConfigs.MP_DISCOUNT_URI, amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    open func getCodeDiscount(url: String = PXServicesURLConfigs.MP_API_BASE_URL, uri: String = PXServicesURLConfigs.MP_DISCOUNT_URI, amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: [String:String]?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         var addInfo: String? = nil
-        if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
-            addInfo = discountAdditionalInfo?.parseToQuery()
+        if let discountAdditionalInfo = discountAdditionalInfo {
+            let discountAdditionalInfoDic = discountAdditionalInfo as NSDictionary
+            if !NSDictionary.isNullOrEmpty(discountAdditionalInfoDic) {
+                addInfo = discountAdditionalInfoDic.parseToQuery()
+            }
         }
         var discountUrl = url
         if discountUrl == PXServicesURLConfigs.MP_API_BASE_URL, baseURL != PXServicesURLConfigs.MP_API_BASE_URL {
@@ -276,4 +279,3 @@ open class MercadoPagoServices: NSObject {
         self.language = language
     }
 }
-
