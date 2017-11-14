@@ -267,7 +267,7 @@ open class MercadoPagoServices: NSObject {
     internal class func getParamsPublicKeyAndAcessToken(_ merchantPublicKey: String, _ payerAccessToken: String?) -> String {
         var params: String = ""
 
-        if String.isNullOrEmpty(payerAccessToken) {
+        if !String.isNullOrEmpty(payerAccessToken) {
             params.paramsAppend(key: ApiParams.PAYER_ACCESS_TOKEN, value: payerAccessToken!)
         }
         params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: merchantPublicKey)
