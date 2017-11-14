@@ -15,22 +15,10 @@ open class MercadoPagoServices: NSObject {
     open var payerAccessToken: String
     open var procesingMode: String
 
-    private var baseURL: String!
+    private var baseURL: String! = PXServicesURLConfigs.MP_API_BASE_URL
     private var gatewayBaseURL: String!
-    private var getCustomerBaseURL: String!
-    private var createCheckoutPreferenceURL: String!
-    private var getMerchantDiscountBaseURL: String!
-    private var getCustomerURI: String!
-
-    private var createCheckoutPreferenceURI: String!
-    private var getMerchantDiscountURI: String!
-
-    private var getCustomerAdditionalInfo: NSDictionary!
-    private var createCheckoutPreferenceAdditionalInfo: NSDictionary!
-    private var getDiscountAdditionalInfo: NSDictionary!
 
     private var language: String = NSLocale.preferredLanguages[0]
-
 
     public init(merchantPublicKey: String, payerAccessToken: String = "", procesingMode: String = "aggregator") {
         self.merchantPublicKey = merchantPublicKey
@@ -125,7 +113,7 @@ open class MercadoPagoServices: NSObject {
                     failure(PXError(domain: "mercadopago.sdk.createToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String : Any], apiException: apiException))
                 }
             }
-            }, failure: failure)
+        }, failure: failure)
     }
 
     open func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -199,42 +187,47 @@ open class MercadoPagoServices: NSObject {
                 paymentMethods = try! PXPaymentMethod.fromJSON(data: data)
                 callback(paymentMethods)
             }
-            }, failure: failure)
+        }, failure: failure)
     }
 
-    open func getDirectDiscount(amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
+    open func getDirectDiscount(url: String = PXServicesURLConfigs.MP_API_BASE_URL, uri: String = PXServicesURLConfigs.MP_DISCOUNT_URI, amount: Double, payerEmail: String, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        getCodeDiscount(url: url, uri: uri, amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
     }
 
-    open func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    open func getCodeDiscount(url: String = PXServicesURLConfigs.MP_API_BASE_URL, uri: String = PXServicesURLConfigs.MP_DISCOUNT_URI, amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: NSDictionary?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         var addInfo: String? = nil
         if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
             addInfo = discountAdditionalInfo?.parseToQuery()
         }
-        let discountService = DiscountService(baseURL: getMerchantDiscountBaseURL, URI: getMerchantDiscountURI)
+        var discountUrl = url
+        if discountUrl == PXServicesURLConfigs.MP_API_BASE_URL, baseURL != PXServicesURLConfigs.MP_API_BASE_URL {
+            discountUrl = baseURL
+        }
+        let discountService = DiscountService(baseURL: discountUrl, URI: uri)
 
         discountService.getDiscount(publicKey: merchantPublicKey, amount: amount, code: couponCode, payerEmail: payerEmail, additionalInfo: addInfo, success: callback, failure: failure)
     }
 
     public func getCampaigns(callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-            let discountService = DiscountService(baseURL: getMerchantDiscountBaseURL, URI: getMerchantDiscountURI)
-            discountService.getCampaigns(publicKey: merchantPublicKey, success: callback, failure: failure)
-        }
+        let discountService = DiscountService(baseURL: baseURL, URI: PXServicesURLConfigs.MP_CAMPAIGNS_URI)
+        discountService.getCampaigns(publicKey: merchantPublicKey, success: callback, failure: failure)
+    }
 
-
-    open func getCustomer(callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: CustomService = CustomService(baseURL: getCustomerBaseURL, URI: getCustomerURI)
+    open func getCustomer(url: String, uri: String, additionalInfo: [String:String]? = nil, callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        let service: CustomService = CustomService(baseURL: url, URI: uri)
 
         var addInfo: String = ""
-        if !NSDictionary.isNullOrEmpty(getCustomerAdditionalInfo), let addInfoDict = getCustomerAdditionalInfo {
-            addInfo = addInfoDict.parseToQuery()
+        if let additionalInfo = additionalInfo {
+            let additionalInfoDic = additionalInfo as NSDictionary
+            if !NSDictionary.isNullOrEmpty(additionalInfoDic) {
+                addInfo = additionalInfoDic.parseToQuery()
+            }
         }
-
         service.getCustomer(params: addInfo, success: callback, failure: failure)
     }
 
-    open func createCheckoutPreference(bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        let service: CustomService = CustomService(baseURL: createCheckoutPreferenceURL, URI: createCheckoutPreferenceURI)
+    open func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        let service: CustomService = CustomService(baseURL: url, URI: uri)
 
         let body: String?
         if let bodyInfo = bodyInfo {
@@ -262,28 +255,6 @@ open class MercadoPagoServices: NSObject {
         return baseURL
     }
 
-    public func setGetCustomer(baseURL: String, URI: String, additionalInfo: [String:String]? = [:]) {
-        getCustomerBaseURL = baseURL
-        getCustomerURI = URI
-        if let additionalInfo =  additionalInfo as NSDictionary? {
-            getCustomerAdditionalInfo = additionalInfo
-        }
-    }
-
-    public func setDiscount(baseURL: String = PXServicesURLConfigs.MP_API_BASE_URL, URI: String = PXServicesURLConfigs.MP_DISCOUNT_URI, additionalInfo: [String:String]? = [:]) {
-        getMerchantDiscountBaseURL = baseURL
-        getMerchantDiscountURI = URI
-        if let additionalInfo =  additionalInfo as NSDictionary? {
-            getDiscountAdditionalInfo = additionalInfo
-        }
-    }
-
-    public func setCreateCheckoutPreference(baseURL: String, URI: String, additionalInfo: NSDictionary? = [:]) {
-        createCheckoutPreferenceURL = baseURL
-        createCheckoutPreferenceURI = URI
-        createCheckoutPreferenceAdditionalInfo = additionalInfo
-    }
-
     internal class func getParamsPublicKey(_ merchantPublicKey: String) -> String {
         var params: String = ""
         params.paramsAppend(key: ApiParams.PUBLIC_KEY, value: merchantPublicKey)
@@ -305,3 +276,4 @@ open class MercadoPagoServices: NSObject {
         self.language = language
     }
 }
+

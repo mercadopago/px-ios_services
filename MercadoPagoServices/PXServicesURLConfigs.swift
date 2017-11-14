@@ -34,4 +34,6 @@ open class PXServicesURLConfigs: NSObject {
     open static let MP_PREFERENCE_URI = MP_ENVIROMENT + "/preferences/"
     open static let MP_DISCOUNT_URI =  "/discount_campaigns/"
     open static let MP_CUSTOMER_URI = "/customers?preference_id="
+    open static let MP_CAMPAIGNS_URI = "/campaigns/check_availability"
 }
+
