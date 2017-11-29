@@ -12,7 +12,7 @@ open class PXInstruction: NSObject, Codable {
     open var subtitle: String?
     open var accreditationMessage: String?
     open var accreditationComments: [String]?
-    open var action: [PXInstructionAction]?
+    open var actions: [PXInstructionAction]?
     open var type: String?
     open var references: [PXInstructionReference]?
     open var secondaryInfo: [String]?
@@ -24,7 +24,7 @@ open class PXInstruction: NSObject, Codable {
         self.subtitle = subtitle
         self.accreditationMessage = accreditationMessage
         self.accreditationComments = accreditationComments
-        self.action = action
+        self.actions = action
         self.type = type
         self.references = references
         self.secondaryInfo = secondaryInfo
@@ -37,7 +37,7 @@ open class PXInstruction: NSObject, Codable {
         case subtitle
         case accreditationMessage = "accreditation_message"
         case accreditationComments = "accreditation_comments"
-        case action
+        case actions
         case type
         case references
         case secondaryInfo = "secondary_info"
@@ -51,7 +51,7 @@ open class PXInstruction: NSObject, Codable {
         let subtitle: String? = try container.decodeIfPresent(String.self, forKey: .subtitle)
         let accreditationMessage: String? = try container.decodeIfPresent(String.self, forKey: .accreditationMessage)
         let accreditationComments: [String]? = try container.decodeIfPresent([String].self, forKey: .accreditationComments)
-        let action: [PXInstructionAction]? = try container.decodeIfPresent([PXInstructionAction].self, forKey: .action)
+        let action: [PXInstructionAction]? = try container.decodeIfPresent([PXInstructionAction].self, forKey: .actions)
         let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
         let references: [PXInstructionReference]? = try container.decodeIfPresent([PXInstructionReference].self, forKey: .references)
         let secondaryInfo: [String]? = try container.decodeIfPresent([String].self, forKey: .secondaryInfo)
@@ -67,7 +67,7 @@ open class PXInstruction: NSObject, Codable {
         try container.encodeIfPresent(self.subtitle, forKey: .subtitle)
         try container.encodeIfPresent(self.accreditationMessage, forKey: .accreditationMessage)
         try container.encodeIfPresent(self.accreditationComments, forKey: .accreditationComments)
-        try container.encodeIfPresent(self.action, forKey: .action)
+        try container.encodeIfPresent(self.actions, forKey: .actions)
         try container.encodeIfPresent(self.type, forKey: .type)
         try container.encodeIfPresent(self.references, forKey: .references)
         try container.encodeIfPresent(self.secondaryInfo, forKey: .secondaryInfo)
