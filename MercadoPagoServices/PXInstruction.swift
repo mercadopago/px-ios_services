@@ -19,12 +19,12 @@ open class PXInstruction: NSObject, Codable {
     open var tertiaryInfo: [String]?
     open var info: [String]?
 
-    public init(title: String?, subtitle: String?, accreditationMessage: String?, accreditationComments: [String]?, action: [PXInstructionAction]?, type: String?, references: [PXInstructionReference]?, secondaryInfo: [String]?, tertiaryInfo: [String]?, info: [String]?) {
+    public init(title: String?, subtitle: String?, accreditationMessage: String?, accreditationComments: [String]?, actions: [PXInstructionAction]?, type: String?, references: [PXInstructionReference]?, secondaryInfo: [String]?, tertiaryInfo: [String]?, info: [String]?) {
         self.title = title
         self.subtitle = subtitle
         self.accreditationMessage = accreditationMessage
         self.accreditationComments = accreditationComments
-        self.actions = action
+        self.actions = actions
         self.type = type
         self.references = references
         self.secondaryInfo = secondaryInfo
@@ -58,7 +58,7 @@ open class PXInstruction: NSObject, Codable {
         let tertiaryInfo: [String]? = try container.decodeIfPresent([String].self, forKey: .tertiaryInfo)
         let info: [String]? = try container.decodeIfPresent([String].self, forKey: .info)
 
-        self.init(title: title, subtitle: subtitle, accreditationMessage: accreditationMessage, accreditationComments: accreditationComments, action: action, type: type, references: references, secondaryInfo: secondaryInfo, tertiaryInfo: tertiaryInfo, info: info)
+        self.init(title: title, subtitle: subtitle, accreditationMessage: accreditationMessage, accreditationComments: accreditationComments, actions: action, type: type, references: references, secondaryInfo: secondaryInfo, tertiaryInfo: tertiaryInfo, info: info)
     }
 
     public func encode(to encoder: Encoder) throws {
