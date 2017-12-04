@@ -20,7 +20,7 @@ internal class ApiParams: NSObject {
     static let PUBLIC_KEY = "public_key"
     static let BIN = "bin"
     static let AMOUNT = "amount"
-    static let ISSUER_ID = "issuer_id"
+    static let ISSUER_ID = "issuer.id"
     static let PAYMENT_METHOD_ID = "payment_method_id"
     static let PROCESSING_MODE = "processing_mode"
     static let PAYMENT_TYPE = "payment_type"

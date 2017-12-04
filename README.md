@@ -8,7 +8,7 @@ Simply add the following line to your Podfile:
 ```ruby
 use_frameworks!
 platform :ios, '8.0'
-pod 'MercadoPagoServices', '1.0.1'
+pod 'MercadoPagoServices', '1.0.2'
 ```
 
 Then the first step is to create an instance of **_MercadoPagoServices_** class:
