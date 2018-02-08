@@ -25,8 +25,8 @@ open class PXServicesURLConfigs: NSObject {
     open static let PAYMENTS = "/payments"
     open static let MP_CREATE_TOKEN_URI = MP_OP_ENVIROMENT + CARD_TOKEN
     open static let MP_PAYMENT_METHODS_URI = MP_OP_ENVIROMENT + PAYMENT_METHODS
-    open static var MP_INSTALLMENTS_URI = MP_OP_ENVIROMENT + INSTALLMENTS
-    open static var MP_ISSUERS_URI = MP_OP_ENVIROMENT + CARD_ISSSUERS
+    open static var MP_INSTALLMENTS_URI = MP_ENVIROMENT + INSTALLMENTS
+    open static var MP_ISSUERS_URI = MP_ENVIROMENT + CARD_ISSSUERS
     open static let MP_IDENTIFICATION_URI = "/identification_types"
     open static let MP_PROMOS_URI = MP_OP_ENVIROMENT + PAYMENT_METHODS + "/deals"
     open static let MP_SEARCH_PAYMENTS_URI = MP_ENVIROMENT + PAYMENT_METHODS + "/search/options"
@@ -36,4 +36,3 @@ open class PXServicesURLConfigs: NSObject {
     open static let MP_CUSTOMER_URI = "/customers?preference_id="
     open static let MP_CAMPAIGNS_URI = "/campaigns/check_availability"
 }
-

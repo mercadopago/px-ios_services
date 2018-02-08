@@ -1,6 +1,6 @@
 # Mercado Pago Services SDK - iOS (Swift 4.0)
 
-This library makes it easy to consume Mercado Pago API from your application. By creating tokens, Mercado Pago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server. 
+This library makes it easy to consume Mercado Pago API from your application. By creating tokens, Mercado Pago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
 
 ## Installation
 Simply add the following line to your Podfile:
@@ -8,7 +8,7 @@ Simply add the following line to your Podfile:
 ```ruby
 use_frameworks!
 platform :ios, '8.0'
-pod 'MercadoPagoServices', '1.0.2'
+pod 'MercadoPagoServices', '1.0.4'
 ```
 
 Then the first step is to create an instance of **_MercadoPagoServices_** class:
@@ -17,11 +17,11 @@ Then the first step is to create an instance of **_MercadoPagoServices_** class:
 let mercadoPagoServices = MercadoPagoServices(merchantPublicKey: "publicKey")
 ```
 
-## Charging cards
+## Loading Cards
 
-Get the necessary data to charge cards.
+Get the necessary data to load cards.
 
-In order to charge your users, you need to get information about the card that will be used.
+In order to load your user's cards , you need to get information about the card that will be used.
 
 You need to find out your customer’s credit card type and brand to correctly validate details and, as we will see later on, to know if it is necessary to request additional information or define the number of installments available for payment.
 
@@ -106,7 +106,7 @@ The following code shows you how you can exchange the credit card details for a 
 
 ```swift
   mercadoPagoServices.createToken(pxCardToken, callback: { (pxToken) in
-   //DONE! 
+   //DONE!
   }) { (error) in
       //TODO: Manage API Failure
   }
@@ -138,7 +138,7 @@ The BODY of the request must contain:
 }
 ```
 
-## Charging cards in installments
+## Installments
 
 ### Display installment plans
 
