@@ -28,7 +28,7 @@ open class CustomService: MercadoPagoService {
                 if custDic["error"] != nil {
                     if failure != nil {
                         let apiException = try! PXApiException.fromJSON(data: data)
-                        failure!(PXError(domain: "mercadopago.sdk.customServer.getCustomer", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: custDic as! [String : Any], apiException: apiException))
+                        failure!(PXError(domain: "mercadopago.sdk.customServer.getCustomer", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: custDic as? [String : Any], apiException: apiException))
                     }
                 } else {
                     let customer: PXCustomer = try! PXCustomer.fromJSONToPXCustomer(data: data)
@@ -57,7 +57,7 @@ open class CustomService: MercadoPagoService {
                         success(inProcessPayment)
                     } else if failure != nil {
                         let apiException = try! PXApiException.fromJSON(data: data)
-                        failure!(PXError(domain: "mercadopago.sdk.customServer.createPayment", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: paymentDic as! [String : Any], apiException: apiException))
+                        failure!(PXError(domain: "mercadopago.sdk.customServer.createPayment", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: paymentDic as? [String : Any], apiException: apiException))
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {

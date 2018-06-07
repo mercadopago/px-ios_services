@@ -20,7 +20,7 @@ open class MercadoPagoService: NSObject {
 
     public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
                         failure: ((_ error: NSError) -> Void)?) {
-        var url = baseURL + uri
+        let url = baseURL + uri
         var requesturl = url
         if !String.isNullOrEmpty(params) {
             requesturl += "?" + params!
@@ -50,29 +50,26 @@ open class MercadoPagoService: NSObject {
         }
         if let body = body {
             #if DEBUG
-                print("--REQUEST_BODY: \(body as! NSString)")
+                print("--REQUEST_BODY: \(body as NSString)")
             #endif
             request.httpBody = body.data(using: String.Encoding.utf8)
         }
 
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-
-        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
+        let session = URLSession.shared
+        
+        session.dataTask(with: request as URLRequest) { (data, response, error) in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             if error == nil && data != nil {
-                do {
-                    #if DEBUG
-                        print("--REQUEST_RESPONSE: \(String(data: data!, encoding: String.Encoding.utf8) as! NSString)\n")
-                    #endif
-                    success(data!)
-                } catch {
+                #if DEBUG
+                    print("--REQUEST_RESPONSE: \(String(data: data!, encoding: String.Encoding.utf8) as NSString? ?? "")\n")
+                #endif
+                success(data!)
 
-                    let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-                    failure?(e)
-                }
             } else {
                 failure?(error! as NSError)
             }
+
         }
     }
 }

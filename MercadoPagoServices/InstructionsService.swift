@@ -38,7 +38,7 @@ open class InstructionsService: MercadoPagoService {
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
 
             let error = jsonResult["error"] as? String
-            if error != nil && error!.characters.count > 0 {
+            if error != nil && error!.count > 0 {
                 let apiException = try! PXApiException.fromJSON(data: data)
                 let e : PXError = PXError(domain: "com.mercadopago.sdk.getInstructions", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "No se ha podido obtener las intrucciones correspondientes al pago", NSLocalizedFailureReasonErrorKey: jsonResult["error"] as! String], apiException: apiException)
                 failure!(e)

@@ -55,7 +55,7 @@ open class PXPayerCost: NSObject, Codable {
     }
 
     public func encode(to encoder: Encoder) throws {
-        var container = try encoder.container(keyedBy: PXPayerCostKeys.self)
+        var container = encoder.container(keyedBy: PXPayerCostKeys.self)
         try container.encodeIfPresent(self.installmentRate, forKey: .installmentRate)
         try container.encodeIfPresent(self.labels, forKey: .labels)
         try container.encodeIfPresent(self.minAllowedAmount, forKey: .minAllowedAmount)

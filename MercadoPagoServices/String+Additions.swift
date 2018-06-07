@@ -25,21 +25,21 @@ extension String {
 
     subscript (i: Int) -> String {
 
-        if self.characters.count > i {
-            return String(self[self.characters.index(self.startIndex, offsetBy: i)])
+        if self.count > i {
+            return String(self[self.index(self.startIndex, offsetBy: i)])
         }
 
         return ""
     }
 
     public func lastCharacters(number: Int) -> String {
-        let trimmedString: String = (self as NSString).substring(from: max(self.characters.count - number, 0))
+        let trimmedString: String = (self as NSString).substring(from: max(self.count - number, 0))
         return trimmedString
     }
 
     public func indexAt(_ theInt: Int)->String.Index {
 
-        return self.characters.index(self.characters.startIndex, offsetBy: theInt)
+        return self.index(self.startIndex, offsetBy: theInt)
     }
 
     public func trimSpaces() -> String {
@@ -84,7 +84,7 @@ open class Regex {
 
     open func test(_ input: String) -> Bool {
         if self.internalExpression != nil {
-            let matches = self.internalExpression!.matches(in: input, options: [], range:NSMakeRange(0, input.characters.count))
+            let matches = self.internalExpression!.matches(in: input, options: [], range:NSMakeRange(0, input.count))
             return matches.count > 0
         } else {
             return false
@@ -106,12 +106,11 @@ class JSONHandler: NSObject {
         do {
             let dict = NSMutableDictionary()
             for (key, value) in jsonDictionary {
-                if let value = value as? AnyObject {
-                    dict.setValue(value, forKey: key)
-                }
+                let value = value as AnyObject
+                dict.setValue(value, forKey: key)
             }
             let jsonData = try JSONSerialization.data(withJSONObject: dict)
-            result = NSString(data: jsonData, encoding: String.Encoding.ascii.rawValue)  as! String
+            result = NSString(data: jsonData, encoding: String.Encoding.ascii.rawValue) as String? ?? ""
         } catch {
             print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
         }
@@ -144,7 +143,8 @@ extension NSDictionary {
                     parametersString = parametersString + key + "=" + value + "&"
                 }
             }
-            parametersString = parametersString.substring(to: parametersString.index(before: parametersString.endIndex))
+            let index =  parametersString.index(before: parametersString.endIndex)
+            parametersString = String(parametersString[..<index]) // Replaces str.substring(to: index)
             return parametersString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
         } else {
             return ""

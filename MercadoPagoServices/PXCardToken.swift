@@ -75,7 +75,7 @@ extension PXCardToken {
             }
 
             // Validate card length
-            let filteredSettings = cardSettings.filter({return $0.cardNumber?.length == cardNumber!.trimSpaces().characters.count})
+            let filteredSettings = cardSettings.filter({return $0.cardNumber?.length == cardNumber!.trimSpaces().count})
 
             if Array.isNullOrEmpty(filteredSettings) {
                 if userInfo == nil {
@@ -108,15 +108,15 @@ extension PXCardToken {
         guard let cardNumber = cardNumber else {
             return true
         }
-        if cardNumber.characters.count < 6 {
+        if cardNumber.count < 6 {
             return true
         }
 
         if !self.validateSecurityCode(securityCode: securityCode) {
             return false
         } else {
-            let range = cardNumber.startIndex ..< cardNumber.characters.index(cardNumber.characters.startIndex, offsetBy: 6)
-            return validateSecurityCodeWithPaymentMethod(securityCode!, paymentMethod: paymentMethod, bin: cardNumber.substring(with: range))
+            let range = cardNumber.startIndex ..< cardNumber.index(cardNumber.startIndex, offsetBy: 6)
+            return validateSecurityCodeWithPaymentMethod(securityCode!, paymentMethod: paymentMethod, bin: String(cardNumber[range])) // Replace str.substring(with: range)
         }
     }
 
@@ -142,7 +142,7 @@ extension PXCardToken {
     open func validateIdentificationNumber(_ identificationType: PXIdentificationType?) -> Bool {
         if identificationType != nil {
             if cardholder?.identification != nil && cardholder?.identification?.number != nil {
-                let len = cardholder!.identification!.number!.characters.count
+                let len = cardholder!.identification!.number!.count
                 let min = identificationType!.minLength!
                 let max = identificationType!.maxLength!
                 if min != 0 && max != 0 {
@@ -163,15 +163,15 @@ extension PXCardToken {
     }
 
     internal func getBin() -> String? {
-        let range =  cardNumber!.startIndex ..< cardNumber!.characters.index(cardNumber!.characters.startIndex, offsetBy: 6)
-        let bin: String? = cardNumber!.characters.count >= 6 ? cardNumber!.substring(with: range) : nil
+        let range =  cardNumber!.startIndex ..< cardNumber!.index(cardNumber!.startIndex, offsetBy: 6)
+        let bin: String? = cardNumber!.count >= 6 ? String(cardNumber![range]) : nil // Replaces str.substring(with: range)
         return bin
     }
 
     internal func validateCardNumber() -> Bool {
         if String.isNullOrEmpty(cardNumber) {
             return false
-        } else if self.cardNumber!.characters.count < MIN_LENGTH_NUMBER || self.cardNumber!.characters.count > MAX_LENGTH_NUMBER {
+        } else if self.cardNumber!.count < MIN_LENGTH_NUMBER || self.cardNumber!.count > MAX_LENGTH_NUMBER {
             return false
         }
 
@@ -179,7 +179,7 @@ extension PXCardToken {
     }
 
     internal func validateSecurityCode(securityCode: String?) -> Bool {
-        if String.isNullOrEmpty(self.securityCode) || self.securityCode!.characters.count < 3 || self.securityCode!.characters.count > 4 {
+        if String.isNullOrEmpty(self.securityCode) || self.securityCode!.count < 3 || self.securityCode!.count > 4 {
             return false
         }
         return true
@@ -189,7 +189,7 @@ extension PXCardToken {
         let setting: [PXSetting]? = PXSetting.getSettingByBin(paymentMethod.settings, bin: getBin())
         if let settings = setting {
             if let securityCodeLenght = settings[0].securityCode?.length {
-                if (securityCodeLenght != 0) && (securityCode.characters.count != securityCodeLenght) {
+                if (securityCodeLenght != 0) && (securityCode.count != securityCodeLenght) {
                     return false
                 } else {
                     return true
@@ -234,8 +234,8 @@ extension PXCardToken {
     internal func normalizeYear(_ year: Int) -> Int {
         if year < 100 && year >= 0 {
             let currentYear: String = String(describing: now.year)
-            let range = currentYear.startIndex ..< currentYear.characters.index(currentYear.characters.endIndex, offsetBy: -2)
-            let prefix: String = currentYear.substring(with: range)
+            let range = currentYear.startIndex ..< currentYear.index(currentYear.endIndex, offsetBy: -2)
+            let prefix: String = String(currentYear[range]) // Replaces str.substring(with: range)
 
             let nsReturn: NSString = prefix.appending(String(year)) as NSString
             return nsReturn.integerValue
@@ -245,7 +245,7 @@ extension PXCardToken {
 
     internal func checkLuhn(cardNumber: String) -> Bool {
         var sum = 0
-        let reversedCharacters = cardNumber.characters.reversed().map { String($0) }
+        let reversedCharacters = cardNumber.reversed().map { String($0) }
         for (idx, element) in reversedCharacters.enumerated() {
             guard let digit = Int(element) else { return false }
             switch ((idx % 2 == 1), digit) {
