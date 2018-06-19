@@ -10,9 +10,11 @@ import Foundation
 
 open class MercadoPagoService: NSObject {
 
-    let MP_DEFAULT_TIME_OUT = 15.0
+    let default_time_out = 15.0
+    let number_of_retries: Int = 2
 
     var baseURL: String!
+
     init (baseURL: String) {
         super.init()
         self.baseURL = baseURL
@@ -20,7 +22,8 @@ open class MercadoPagoService: NSObject {
 
     public func request(uri: String, params: String?, body: String?, method: String, headers: [String:String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
                         failure: ((_ error: NSError) -> Void)?) {
-        var url = baseURL + uri
+
+        let url = baseURL + uri
         var requesturl = url
         if !String.isNullOrEmpty(params) {
             requesturl += "?" + params!
@@ -30,10 +33,10 @@ open class MercadoPagoService: NSObject {
         let request: NSMutableURLRequest
         if cache {
             request  = NSMutableURLRequest(url: finalURL as URL,
-                                           cachePolicy: .returnCacheDataElseLoad, timeoutInterval: MP_DEFAULT_TIME_OUT)
+                                           cachePolicy: .returnCacheDataElseLoad, timeoutInterval: default_time_out)
         } else {
             request = NSMutableURLRequest(url: finalURL as URL,
-                                          cachePolicy: .useProtocolCachePolicy, timeoutInterval: MP_DEFAULT_TIME_OUT)
+                                          cachePolicy: .useProtocolCachePolicy, timeoutInterval: default_time_out)
         }
 
         #if DEBUG
@@ -50,28 +53,59 @@ open class MercadoPagoService: NSObject {
         }
         if let body = body {
             #if DEBUG
-                print("--REQUEST_BODY: \(body as! NSString)")
+                print("--REQUEST_BODY: \(body as NSString)")
             #endif
             request.httpBody = body.data(using: String.Encoding.utf8)
         }
 
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        taskWithRetry(number_of_retries, asyncTask: { (success, failure) in
+            self.executeAsyncCall(request: request as URLRequest, success: success, failure: failure)
+        }, success: { (responseData) in
+            success(responseData)
+        }, failure: { (error) in
+            failure?(error as NSError)
+        })
+    }
 
-        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            if error == nil && data != nil {
-                do {
+    final private func executeAsyncCall(request: URLRequest, success: @escaping (_ data: Data) -> Void,
+                                        failure: ((_ error: NSError) -> Void)?) {
+        NSURLConnection.sendAsynchronousRequest(request, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
+
+            if let remoteData = data, error == nil {
+                if let decodedData = String(data: remoteData, encoding: String.Encoding.utf8) as NSString? {
                     #if DEBUG
-                        print("--REQUEST_RESPONSE: \(String(data: data!, encoding: String.Encoding.utf8) as! NSString)\n")
+                        print("--REQUEST_RESPONSE: \(decodedData)\n")
                     #endif
-                    success(data!)
-                } catch {
-
-                    let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-                    failure?(e)
+                    success(remoteData)
+                } else {
+                    let nsError: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
+                    failure?(nsError)
                 }
             } else {
-                failure?(error! as NSError)
+                guard let cError = error  else {
+                    let nsError: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorUnknown, userInfo: nil)
+                    failure?(nsError)
+                    return
+                }
+                failure?(cError as NSError)
+            }
+        }
+    }
+}
+
+//MARK: - Generic retry
+extension MercadoPagoService {
+    final private func taskWithRetry<T>(_ numberOfRetries: Int, asyncTask: @escaping (_ success: @escaping (T) -> Void, _ failure: @escaping (Error) -> Void) -> Void, success: @escaping (T) -> Void, failure: @escaping (Error) -> Void) {
+        asyncTask({ (obj) in
+            success(obj)
+        }) { (error) in
+            #if DEBUG
+                print("--Error_Retry_intent \(numberOfRetries)")
+            #endif
+            if numberOfRetries > 1 {
+                self.taskWithRetry(numberOfRetries - 1, asyncTask: asyncTask, success: success, failure: failure)
+            } else {
+                failure(error)
             }
         }
     }
