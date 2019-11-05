@@ -9,6 +9,7 @@
 import Foundation
 import MercadoPagoPXTrackingV4
 
+@objcMembers
 open class MercadoPagoServices: NSObject {
 
     open var merchantPublicKey: String
